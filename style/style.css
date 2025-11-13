@@ -1,261 +1,185 @@
-/* === GLOBAL === */
+/* === GLOBAL LAYOUT === */
 html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: "Press Start 2P", monospace;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-
-    /* FULL SKY BACKGROUND */
-    background: url("../assets/images/CloudshomeUI.png") no-repeat top center,
-                #6ac6ff;
-    background-size: 100% 320px;
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
-/* HEADER */
+body {
+  font-family: "Press Start 2P", monospace;
+  color: #fff;
+  text-align: center;
+  background: #6ac6ff; /* fallback sky blue */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Make images crisp */
+img {
+  image-rendering: pixelated;
+}
+
+/* === SKY + CLOUDS === */
+.sky {
+  position: relative;
+  width: 100%;
+  height: 220px; /* sky height */
+  background: linear-gradient(#6ac6ff, #90ddff);
+  overflow: hidden;
+}
+
+/* cloud strip lives inside .sky */
+.cloud-layer {
+  position: absolute;
+  left: 0;
+  bottom: 20px;
+  width: 200%;           /* wider so we can scroll */
+  height: 140px;
+
+  background: url("../assets/images/CloudshomeUI.png") repeat-x;
+  background-size: auto 140px;  /* keep pixel aspect, no stretch */
+
+  animation: cloudScroll 40s linear infinite;
+}
+
+@keyframes cloudScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* === HEADER === */
 header {
-    margin-top: 200px;
-    color: #ffffff;
-    text-shadow: 0 0 6px #3b79ff;
+  margin-top: 10px;
+  color: #ffffff;
+  text-shadow: 0 0 6px #3b79ff;
 }
 
 header h1 {
-    font-size: 22px;
+  font-size: 22px;
 }
 
 header p {
-    font-size: 12px;
-    margin-top: 10px;
+  font-size: 12px;
+  margin-top: 10px;
 }
 
-/* PANEL */
+/* === PANEL === */
 .panel {
-    margin: 30px auto;
-    width: 90%;
-    max-width: 900px;
-    background: #1b7d1b;
-    border: 6px solid #0f4f0f;
-    box-shadow: inset 0 0 0 4px #2da32d;
-    padding: 25px;
-    border-radius: 4px;
+  margin: 30px auto;
+  width: 90%;
+  max-width: 900px;
+  background: #1b7d1b;
+  border: 6px solid #0f4f0f;
+  box-shadow: inset 0 0 0 4px #2da32d;
+  padding: 25px;
+  border-radius: 4px;
 }
 
 .game-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 25px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 25px;
 }
 
-/* GAME CARDS */
+/* === GAME CARDS === */
 .game-card {
-    cursor: pointer;
-    transition: transform 0.2s ease, filter 0.2s ease;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
 
 .game-card:hover {
-    transform: translateY(-6px);
-    filter: brightness(1.2);
+  transform: translateY(-6px);
+  filter: brightness(1.2);
 }
 
 /* Frame image */
 .frame {
-    width: 100%;
-    height: auto;
-    image-rendering: pixelated;
+  width: 100%;
+  height: auto;
 }
 
+/* Title text inside card */
 .game-title {
-    margin-top: -50px;
-    font-size: 12px;
-    color: #eaffea;
-    text-shadow: 0 0 4px #1f8b1f;
+  margin-top: -50px;
+  font-size: 12px;
+  color: #eaffea;
+  text-shadow: 0 0 4px #1f8b1f;
 }
 
-/* PIXEL BUTTON */
+/* === PIXEL BUTTON === */
 .pixel-btn {
-    margin-top: 10px;
-    padding: 8px 16px;
-    font-size: 10px;
-    font-family: "Press Start 2P";
-    background: #4a2bb4;
-    color: #fff;
-    border: 3px solid #2c1b6d;
-    border-radius: 6px;
-    cursor: pointer;
-    box-shadow: 0 0 6px #6d45ff;
-    transition: transform 0.2s ease, background 0.2s ease;
-    image-rendering: pixelated;
+  margin-top: 10px;
+  padding: 8px 16px;
+  font-size: 10px;
+  font-family: "Press Start 2P";
+  background: #4a2bb4;
+  color: #fff;
+  border: 3px solid #2c1b6d;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 0 6px #6d45ff;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .pixel-btn:hover {
-    background: #6c3dff;
-    transform: scale(1.1);
+  background: #6c3dff;
+  transform: scale(1.1);
 }
 
-/* SLIME */
+/* === SLIME === */
 .slime {
-    width: 90px;
-    image-rendering: pixelated;
-    margin: 20px auto;
-    display: block;
-    animation: bounce 1s infinite ease-in-out;
+  width: 90px;
+  margin: 20px auto;
+  display: block;
+  animation: bounce 1s infinite ease-in-out;
 }
 
 @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
 }
 
-/* GRASS BASE */
-.grass {
-    width: 100%;
-    height: 60px;
-    background: url("../assets/images/Grass.png") repeat-x;
-    background-size: contain;
-}
-
-/* FOOTER */
-footer {
-    margin-top: auto;
-    padding: 10px;
-    font-size: 10px;
-    color: #b9daff;
-}
-/* Slime wiggle animation */
+/* Extra wiggle on click (JS toggles .slime-wiggle) */
 .slime-wiggle {
-    animation: wiggle 0.35s ease;
+  animation: wiggle 0.35s ease;
 }
 
 @keyframes wiggle {
-    0% { transform: translateY(0) rotate(0); }
-    25% { transform: translateY(-4px) rotate(-4deg); }
-    50% { transform: translateY(0) rotate(3deg); }
-    75% { transform: translateY(-2px) rotate(-3deg); }
-    100% { transform: translateY(0) rotate(0); }
+  0%   { transform: translateY(0) rotate(0); }
+  25%  { transform: translateY(-4px) rotate(-4deg); }
+  50%  { transform: translateY(0) rotate(3deg); }
+  75%  { transform: translateY(-2px) rotate(-3deg); }
+  100% { transform: translateY(0) rotate(0); }
 }
 
-/* Sparkle particle */
+/* === SPARKLES === */
 .sparkle {
-    position: fixed;
-    width: 6px;
-    height: 6px;
-    background: #ffffff;
-    border-radius: 50%;
-    box-shadow: 0 0 8px #fff;
-    animation: sparkleFade 0.5s linear;
-    pointer-events: none;
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #fff;
+  animation: sparkleFade 0.5s linear;
+  pointer-events: none;
 }
 
 @keyframes sparkleFade {
-    0% { opacity: 1; transform: scale(1); }
-    100% { opacity: 0; transform: scale(0); }
+  0%   { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0); }
 }
+
+/* === GRASS + FOOTER === */
 .grass {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 120px;   /* lower strip */
-    background-image: url('images/grass.png');
-    background-repeat: repeat-x;
-}
-#slime {
-    position: absolute;
-    bottom: 120px; /* matches grass height */
-    width: 140px;
-    animation: bounce 1.3s ease-in-out infinite;
+  width: 100%;
+  height: 60px;
+  background: url("../assets/images/Grass.png") repeat-x;
+  background-size: contain;
 }
 
-@keyframes bounce {
-    0%   { transform: translateY(0); }
-    50%  { transform: translateY(-40px); }
-    100% { transform: translateY(0); }
-}
-/* --- Cloud Animation --- */
-.cloud {
-    position: absolute;
-    width: 200px;
-    animation: moveClouds 35s linear infinite;
-    opacity: 0.9;
-}
-
-.cloud:nth-child(1) { top: 80px; left: -300px; animation-duration: 40s; }
-.cloud:nth-child(2) { top: 140px; left: -500px; animation-duration: 55s; }
-.cloud:nth-child(3) { top: 100px; left: -700px; animation-duration: 47s; }
-
-@keyframes moveClouds {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(150vw); }
-}
-/* === SKY BACKGROUND === */
-.sky {
-    background: #6ac6ff;       /* perfect blue sky */
-    height: 200px;
-    width: 100%;
-    position: relative;
-    z-index: -2;
-}
-
-/* === CLOUD STRIP === */
-.cloud-layer {
-    width: 100%;
-    height: 120px;
-    background: url("../assets/images/cloudvar1.png") repeat-x;
-    background-size: contain;
-    position: absolute;
-    top: 80px; /* adjust cloud height */
-    left: 0;
-    z-index: -1;
-
-    /* Animation – duplicate cloud strip infinitely */
-    animation: cloudScroll 40s linear infinite;
-}
-
-@keyframes cloudScroll {
-    from { background-position: 0 0; }
-    to { background-position: -1000px 0; }
-}
-
-/* === GRASS STRIP === */
-.grass {
-    width: 100%;
-    height: 60px;
-    background: url("../assets/images/Grass.png") repeat-x;
-    background-size: contain;
-}
-/* === SKY BACKGROUND === */
-.sky {
-    background: linear-gradient(#6ac6ff, #90ddff);
-    width: 100%;
-    height: 180px;
-    position: relative;
-    z-index: -2;
-}
-
-/* === CLOUD LAYER === */
-.cloud-layer {
-    width: 100%;
-    height: 120px;
-
-    /* Build a cloud strip: cloudvar1 + cloudvar2 repeating horizontally */
-    background-image:
-        url("../assets/images/cloudvar1.png"),
-        url("../assets/images/cloudvar2.png"),
-        url("../assets/images/cloudvar1.png"),
-        url("../assets/images/cloudvar2.png");
-
-    background-repeat: repeat-x;
-    background-size: 160px auto;  /* makes clouds wider and spaced like OG */
-    background-position: 0px 20px, 160px 40px, 320px 25px, 480px 50px;
-
-    animation: cloudScroll 45s linear infinite;
-    position: relative;
-    z-index: -1;
-}
-
-/* === CLOUD ANIMATION === */
-@keyframes cloudScroll {
-    from { background-position-x: 0, 160px, 320px, 480px; }
-    to   { background-position-x: -640px, -480px, -320px, -160px; }
+footer {
+  margin-top: auto;
+  padding: 10px;
+  font-size: 10px;
+  color: #b9daff;
 }
