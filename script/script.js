@@ -6,10 +6,17 @@ function playClick() {
     sfx.play();
 }
 
+let selectCooldown = false;
+
 function playSelect() {
+    if (selectCooldown) return; // ignore spam clicks
+
     const sfx = document.getElementById("sfx-select");
     sfx.currentTime = 0;
     sfx.play();
+
+    selectCooldown = true;
+    setTimeout(() => selectCooldown = false, 300); // 0.3s cooldown
 }
 console.log("Game Loaded");
 console.log("JS loaded correctly!");
