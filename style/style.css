@@ -109,3 +109,38 @@ footer {
     font-size: 10px;
     color: #b9daff;
 }
+.game-card {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.game-card:hover {
+    transform: translateY(-6px);
+    filter: brightness(1.2);
+}
+.game-title {
+    margin-top: -50px;
+    font-size: 12px;
+    color: #eaffea;
+    text-shadow: 0 0 4px #1f8b1f;
+}
+.pixel-btn {
+    margin-top: 10px;
+    padding: 8px 16px;
+    font-size: 10px;
+    font-family: "Press Start 2P";
+    background: #4a2bb4;
+    color: #fff;
+    border: 3px solid #2c1b6d;
+    border-radius: 6px;
+    image-rendering: pixelated;
+    cursor: pointer;
+    box-shadow: 0 0 6px #6d45ff;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.pixel-btn:hover {
+    background: #6c3dff;
+    transform: scale(1.1);
+}
