@@ -14,17 +14,25 @@ html, body {
    SKY + CLOUD BACKGROUND
 ============================ */
 .sky {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 200px;
+    height: 350px; /* increase height to fill entire top */
     background: #6ac6ff;
+    z-index: -2;
 }
 
 .cloud-layer {
+    position: absolute;
+    top: 140px; /* move down slightly to reveal sky above */
+    left: 0;
     width: 100%;
     height: 140px;
     background: url("../assets/images/Screenshot 2025-11-13 143838.png") repeat-x;
     background-size: contain;
     animation: cloudScroll 40s linear infinite;
+    z-index: -1;
 }
 
 @keyframes cloudScroll {
