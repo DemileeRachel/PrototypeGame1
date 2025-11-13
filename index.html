@@ -12,11 +12,6 @@
 
 <body>
 
-    <!-- Sky + Clouds -->
-    <div class="sky"></div>
-    <div class="cloud-layer"></div>
-    <div class="sky-spacer"></div>
-
     <!-- Header -->
     <header>
         <h1>🎮 Mini Game Hub</h1>
@@ -26,47 +21,42 @@
     <!-- Game Panel -->
     <section class="panel">
 
-      <div class="game-list">
+        <div class="game-list">
 
-    <!-- CARD 1 -->
-    <div class="game-card" onclick="playClick()">
-        <img class="frame" src="assets/images/Screenshot 2025-11-13 143746.png" alt="">
-        <p class="game-title">🟦 Clicker Game</p>
-        <button class="pixel-btn" onclick="playSelect()">▶ Play</button>
-    </div>
+            <div class="game-card" onclick="playClick()">
+                <img class="frame" src="assets/images/GreenUI.png" alt="">
+                <p class="game-title">🟦 Clicker Game</p>
+                <button class="pixel-btn" onclick="event.stopPropagation(); playSelect()">▶ Play</button>
+            </div>
 
-    <!-- CARD 2 -->
-    <div class="game-card" onclick="playClick()">
-        <img class="frame" src="assets/images/Screenshot 2025-11-13 143746.png" alt="">
-        <p class="game-title">🧠 Memory Match</p>
-        <button class="pixel-btn" onclick="playSelect()">▶ Play</button>
-    </div>
+            <div class="game-card" onclick="playClick()">
+                <img class="frame" src="assets/images/GreenUI.png" alt="">
+                <p class="game-title">🧠 Memory Match</p>
+                <button class="pixel-btn" onclick="event.stopPropagation(); playSelect()">▶ Play</button>
+            </div>
 
-    <!-- CARD 3 -->
-    <div class="game-card" onclick="playClick()">
-        <img class="frame" src="assets/images/Screenshot 2025-11-13 143746.png" alt="">
-        <p class="game-title">⚡ Reaction Test</p>
-        <button class="pixel-btn" onclick="playSelect()">▶ Play</button>
-    </div>
+            <div class="game-card" onclick="playClick()">
+                <img class="frame" src="assets/images/GreenUI.png" alt="">
+                <p class="game-title">⚡ Reaction Test</p>
+                <button class="pixel-btn" onclick="event.stopPropagation(); playSelect()">▶ Play</button>
+            </div>
 
-    <!-- CARD 4 -->
-    <div class="game-card" onclick="playClick()">
-        <img class="frame" src="assets/images/Screenshot 2025-11-13 143746.png" alt="">
-        <p class="game-title">🐍 Snake Lite</p>
-        <button class="pixel-btn" onclick="playSelect()">▶ Play</button>
-    </div>
+            <div class="game-card" onclick="playClick()">
+                <img class="frame" src="assets/images/GreenUI.png" alt="">
+                <p class="game-title">🐍 Snake Lite</p>
+                <button class="pixel-btn" onclick="event.stopPropagation(); playSelect()">▶ Play</button>
+            </div>
 
         </div>
 
     </section>
 
-    <!-- Mascot Slime -->
-    <img class="slime" src="assets/images/Screenshot 2025-11-13 143821.png" alt="slime">
-    <audio id="sfx-click" src="assets/sounds/click.wav"></audio>
-    <audio id="sfx-select" src="assets/sounds/select.wav"></audio>
-
-
-    <!-- Grass Platform -->
+    <!-- Slime Mascot -->
+    <img class="slime" src="assets/images/mrslime.png" alt="slime">
+<!-- NES Sound Effects -->
+<audio id="sfx-click" src="assets/sounds/click.wav" preload="auto"></audio>
+<audio id="sfx-select" src="assets/sounds/select.wav" preload="auto"></audio>
+    <!-- Grass Bottom -->
     <div class="grass"></div>
 
     <!-- Footer -->
