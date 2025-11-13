@@ -1,2 +1,2 @@
 # PrototypeGame1
-Game creation :)
+Game creations, mini games using script.js
