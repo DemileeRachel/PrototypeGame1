@@ -1,0 +1,106 @@
+/* === RESET === */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Press Start 2P", monospace;
+    background: #6ac6ff; /* fallback sky color */
+    color: #fff;
+    text-align: center;
+}
+
+/* Pixel-perfect */
+img {
+    image-rendering: pixelated;
+}
+
+/* === SKY BACKGROUND === */
+.sky {
+    background: linear-gradient(#6ac6ff, #90ddff);
+    width: 100%;
+    height: 180px;
+}
+
+/* === CLOUD LAYER (pixel style) === */
+.cloud-layer {
+    width: 100%;
+    height: 120px;
+    background: url("../assets/images/clouds.png") repeat-x;
+    background-size: contain;
+    animation: cloudMove 40s linear infinite;
+}
+
+@keyframes cloudMove {
+    from { background-position: 0 0; }
+    to { background-position: -800px 0; }
+}
+
+/* === HEADER === */
+header {
+    margin-top: -40px;
+    color: #ffffff;
+    text-shadow: 0 0 8px #3b79ff;
+}
+
+header h1 {
+    font-size: 20px;
+}
+
+header p {
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+/* === GREEN PIXEL PANEL === */
+.panel {
+    margin: 30px auto;
+    width: 90%;
+    max-width: 900px;
+    background: #1b7d1b;
+    border: 6px solid #0f4f0f;
+    border-radius: 6px;
+    padding: 25px;
+    box-shadow: inset 0 0 0 4px #2da32d;
+}
+
+/* === GAME LIST GRID === */
+.game-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 25px;
+}
+
+/* === GAME CARD === */
+.game-card {
+    background: #215e21;
+    border: 4px solid #163d16;
+    box-shadow: inset 0 0 0 3px #3ca23c;
+    padding: 18px;
+    border-radius: 6px;
+}
+
+.game-card h2 {
+    font-size: 14px;
+    color: #d6ffd6;
+}
+
+.game-card p {
+    font-size: 10px;
+    margin-top: 10px;
+    color: #e8ffe8;
+}
+
+/* === PIXEL GRASS PLATFORM === */
+.grass {
+    width: 100%;
+    height: 50px;
+    background: url("../assets/images/grass.png") repeat-x;
+    image-rendering: pixelated;
+}
+
+/* === FOOTER === */
+footer {
+    margin-top: 20px;
+    padding: 15px 0;
+    background: #1b7d1b;
+    border-top: 4px solid #0f4f0f;
+    color: #d6ffd6;
