@@ -152,3 +152,7 @@ footer {
     background: #6c3dff;
     transform: scale(1.1);
 }
+/* Reserve space at the top so content does not rise */
+.sky-spacer {
+    height: 260px; /* adjust until perfect */
+}
