@@ -14,34 +14,50 @@ img {
     image-rendering: pixelated;
 }
 
-/* === SKY + MOVING CLOUD STRIP === */
+/* === FULL SKY (background blue) === */
 .sky {
-    position: relative;
-    width: 100%;
-    height: 150px; /* smaller sky bar */
-    background: linear-gradient(#6ac6ff, #90ddff);
-    overflow: hidden;
-}
-
-
-/* Cloud strip INSIDE the sky bar */
-.cloud-layer {
-    position: absolute;
-    bottom: 10px;
+    position: fixed;
+    top: 0;
     left: 0;
-    width: 200%;
-    height: 90px; /* smaller cloud band */
-
-    background: url("../assets/images/CloudshomeUI.png") repeat-x;
-    background-size: auto 90px; /* BIGGER CLOUDS without stretch */
-
-    animation: cloudScroll 60s linear infinite;
+    width: 100%;
+    height: 140px; /* taller to match your layout */
+    background: #6ac6ff;
+    z-index: -2;
 }
 
+/* === LARGE CLOUD STRIP (pixel perfect) === */
+.cloud-layer {
+    position: fixed;
+    top: 0;            /* touches top of screen */
+    left: 0;
+    width: 100%;
+    height: 120px;
 
+    /* Repeat your clouds horizontally */
+    background-image: 
+        url("../assets/images/cloudvar1.png"),
+        url("../assets/images/cloudvar2.png"),
+        url("../assets/images/cloudvar1.png"),
+        url("../assets/images/cloudvar2.png");
+
+    background-repeat: repeat-x;
+    background-size: 200px auto;  /* 🔥 bigger clouds */
+    background-position:
+        0px 10px,
+        200px 35px,
+        400px 20px,
+        600px 45px;
+
+    /* Optional scroll animation */
+    animation: cloudScroll 50s linear infinite;
+
+    z-index: -1;
+}
+
+/* Cloud movement */
 @keyframes cloudScroll {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
+    from { background-position-x: 0, 200px, 400px, 600px; }
+    to   { background-position-x: -800px, -600px, -400px, -200px; }
 }
 
 /* === HEADER === */
