@@ -224,3 +224,38 @@ footer {
     background: url("../assets/images/Grass.png") repeat-x;
     background-size: contain;
 }
+/* === SKY BACKGROUND === */
+.sky {
+    background: linear-gradient(#6ac6ff, #90ddff);
+    width: 100%;
+    height: 180px;
+    position: relative;
+    z-index: -2;
+}
+
+/* === CLOUD LAYER === */
+.cloud-layer {
+    width: 100%;
+    height: 120px;
+
+    /* Build a cloud strip: cloudvar1 + cloudvar2 repeating horizontally */
+    background-image:
+        url("../assets/images/cloudvar1.png"),
+        url("../assets/images/cloudvar2.png"),
+        url("../assets/images/cloudvar1.png"),
+        url("../assets/images/cloudvar2.png");
+
+    background-repeat: repeat-x;
+    background-size: 160px auto;  /* makes clouds wider and spaced like OG */
+    background-position: 0px 20px, 160px 40px, 320px 25px, 480px 50px;
+
+    animation: cloudScroll 45s linear infinite;
+    position: relative;
+    z-index: -1;
+}
+
+/* === CLOUD ANIMATION === */
+@keyframes cloudScroll {
+    from { background-position-x: 0, 160px, 320px, 480px; }
+    to   { background-position-x: -640px, -480px, -320px, -160px; }
+}
