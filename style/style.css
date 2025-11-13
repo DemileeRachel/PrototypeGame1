@@ -123,3 +123,68 @@ footer {
     font-size: 10px;
     color: #b9daff;
 }
+/* Slime wiggle animation */
+.slime-wiggle {
+    animation: wiggle 0.35s ease;
+}
+
+@keyframes wiggle {
+    0% { transform: translateY(0) rotate(0); }
+    25% { transform: translateY(-4px) rotate(-4deg); }
+    50% { transform: translateY(0) rotate(3deg); }
+    75% { transform: translateY(-2px) rotate(-3deg); }
+    100% { transform: translateY(0) rotate(0); }
+}
+
+/* Sparkle particle */
+.sparkle {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #fff;
+    animation: sparkleFade 0.5s linear;
+    pointer-events: none;
+}
+
+@keyframes sparkleFade {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0); }
+}
+.grass {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 120px;   /* lower strip */
+    background-image: url('images/grass.png');
+    background-repeat: repeat-x;
+}
+#slime {
+    position: absolute;
+    bottom: 120px; /* matches grass height */
+    width: 140px;
+    animation: bounce 1.3s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(-40px); }
+    100% { transform: translateY(0); }
+}
+/* --- Cloud Animation --- */
+.cloud {
+    position: absolute;
+    width: 200px;
+    animation: moveClouds 35s linear infinite;
+    opacity: 0.9;
+}
+
+.cloud:nth-child(1) { top: 80px; left: -300px; animation-duration: 40s; }
+.cloud:nth-child(2) { top: 140px; left: -500px; animation-duration: 55s; }
+.cloud:nth-child(3) { top: 100px; left: -700px; animation-duration: 47s; }
+
+@keyframes moveClouds {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(150vw); }
+}
