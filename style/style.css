@@ -192,10 +192,10 @@ header p {
 /* === FOOTER === */
 footer {
     position: fixed;
-    bottom: 75px; /* slightly above grass */
+    bottom: 72px; /* 2px gap above grass */
     width: 100%;
-    text-align: center;
     font-size: 10px;
+    text-align: center;
     color: #b9daff;
     z-index: 12;
 }
