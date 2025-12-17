@@ -274,3 +274,20 @@ footer {
   position: relative;
   z-index: 3;
 }
+/* === BIG GAME ICON (fills the frame) === */
+.game-card .game-icon{
+  position: absolute;
+  left: 50%;
+  top: 38%;                     /* visual center of your GreenUI frame */
+  transform: translate(-50%, -50%);
+  font-size: 96px;              /* 🔥 fills the box */
+  line-height: 1;
+  opacity: 0.95;
+  pointer-events: none;
+  z-index: 2;
+
+  /* pixel-friendly depth */
+  text-shadow:
+    4px 4px 0 rgba(0,0,0,0.25),
+    -2px -2px 0 rgba(255,255,255,0.15);
+}
