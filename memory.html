@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memory Match</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style/style.css">
+  <link rel="stylesheet" href="style/memory.css">
+</head>
+
+<body>
+  <header>
+    <h1>🧠 Memory Match</h1>
+    <p><a class="back-link" href="index.html">⬅ Back to Hub</a></p>
+  </header>
+
+  <section class="panel">
+    <div class="memory-wrap">
+
+      <div class="hud">
+        <div class="hud-item">Moves: <span id="moves">0</span></div>
+        <div class="hud-item">Matches: <span id="matches">0</span>/<span id="totalPairs">6</span></div>
+        <div class="hud-item">Time: <span id="time">0</span>s</div>
+        <button id="restartBtn" class="pixel-btn">Restart</button>
+      </div>
+
+      <div id="board" class="board" aria-label="Memory board"></div>
+
+      <div id="win" class="win hidden">
+        <div class="win-box">
+          <div class="win-title">✨ You Win! ✨</div>
+          <div class="win-stats">
+            Moves: <span id="winMoves">0</span> • Time: <span id="winTime">0</span>s
+          </div>
+          <button class="pixel-btn" id="playAgainBtn">Play Again</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SFX (reuse your sounds; add match/win if you want later) -->
+  <audio id="sfx-click" src="assets/sounds/click.wav" preload="auto"></audio>
+  <audio id="sfx-select" src="assets/sounds/select.wav" preload="auto"></audio>
+
+  <script src="script/memory.js"></script>
+</body>
+</html>
