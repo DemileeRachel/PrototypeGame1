@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snake Lite</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style/style.css">
+  <link rel="stylesheet" href="style/snake.css">
+</head>
+
+<body>
+  <header>
+    <h1>🐍 Snake Lite</h1>
+    <p><a class="back-link" href="index.html">⬅ Back to Hub</a></p>
+  </header>
+
+  <section class="panel">
+    <div class="snake-wrap">
+
+      <div class="hud">
+        <div class="hud-item">Score: <span id="score">0</span></div>
+        <div class="hud-item">Best: <span id="best">0</span></div>
+        <div class="hud-item">Speed: <span id="speed">1</span>x</div>
+        <button id="restartBtn" class="pixel-btn">Restart</button>
+      </div>
+
+      <div class="stage">
+        <canvas id="game" width="420" height="420"></canvas>
+
+        <div id="overlay" class="overlay hidden">
+          <div class="overlay-box">
+            <div id="overlayTitle" class="overlay-title">Game Over</div>
+            <div id="overlayText" class="overlay-text">Press Restart</div>
+            <button id="overlayBtn" class="pixel-btn">Play Again</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tips">
+        Controls:
+        <div>• Arrow keys / WASD</div>
+        <div>• Space = Pause</div>
+        <div>• On mobile: swipe on the board</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SFX (optional) -->
+  <audio id="sfx-click" src="assets/sounds/click.wav" preload="auto"></audio>
+  <audio id="sfx-select" src="assets/sounds/select.wav" preload="auto"></audio>
+
+  <script src="script/snake.js"></script>
+</body>
+</html>

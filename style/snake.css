@@ -1,0 +1,64 @@
+.back-link { color: inherit; text-decoration: none; opacity: 0.9; }
+
+.snake-wrap { position: relative; }
+
+.hud{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.10);
+  border: 2px solid rgba(0,0,0,0.18);
+  font-size: 10px;
+}
+
+.hud-item { opacity: 0.95; }
+
+.stage{
+  position: relative;
+  width: min(520px, 95vw);
+  margin: 0 auto;
+}
+
+canvas{
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  border: 4px solid rgba(0,0,0,0.25);
+  background: rgba(255,255,255,0.08);
+  image-rendering: pixelated;
+}
+
+.overlay{
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0,0,0,0.45);
+  border-radius: 16px;
+}
+
+.hidden{ display: none; }
+
+.overlay-box{
+  width: min(520px, 92%);
+  padding: 18px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.14);
+  border: 3px solid rgba(0,0,0,0.25);
+  text-align: center;
+}
+
+.overlay-title{ font-size: 14px; margin-bottom: 10px; }
+.overlay-text{ font-size: 10px; opacity: 0.9; margin-bottom: 14px; line-height: 1.5; }
+
+.tips{
+  margin-top: 12px;
+  font-size: 10px;
+  opacity: 0.85;
+  line-height: 1.6;
+}
