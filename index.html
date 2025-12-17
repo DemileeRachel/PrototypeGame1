@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mini Game Hub</title>
 
+    <!-- Pixel font -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <!-- Main styles -->
     <link rel="stylesheet" href="style/style.css">
 </head>
 
@@ -25,38 +27,40 @@
 
     <!-- Game Panel -->
     <section class="panel">
-
         <div class="game-list">
 
+            <!-- Clicker Game -->
             <div class="game-card" onclick="playClick()">
                 <img class="frame" src="assets/images/GreenUI.png" alt="">
                 <p class="game-title">🟦 Clicker Game</p>
-              <button class="pixel-btn"
-  onclick="event.stopPropagation(); playSelect(); window.location.href='clicker.html';">
-  ▶ Play
-</button>
+                <button class="pixel-btn"
+                    onclick="playSelect(event); window.location.href='clicker.html';">
+                    ▶ Play
+                </button>
             </div>
 
+            <!-- Memory Match -->
             <div class="game-card" onclick="playClick()">
                 <img class="frame" src="assets/images/GreenUI.png" alt="">
                 <p class="game-title">🧠 Memory Match</p>
-                <button class="pixel-btn" onclick="event.stopPropagation(); playSelect()">▶ Play</button>
+                <button class="pixel-btn" onclick="playSelect(event)">▶ Play</button>
             </div>
 
+            <!-- Reaction Test -->
             <div class="game-card" onclick="playClick()">
                 <img class="frame" src="assets/images/GreenUI.png" alt="">
                 <p class="game-title">⚡ Reaction Test</p>
-                <button class="pixel-btn" onclick="event.stopPropagation(); playSelect()">▶ Play</button>
+                <button class="pixel-btn" onclick="playSelect(event)">▶ Play</button>
             </div>
 
+            <!-- Snake Lite -->
             <div class="game-card" onclick="playClick()">
                 <img class="frame" src="assets/images/GreenUI.png" alt="">
                 <p class="game-title">🐍 Snake Lite</p>
-                <button class="pixel-btn" onclick="event.stopPropagation(); playSelect()">▶ Play</button>
+                <button class="pixel-btn" onclick="playSelect(event)">▶ Play</button>
             </div>
 
         </div>
-
     </section>
 
     <!-- Slime Mascot -->
@@ -70,6 +74,7 @@
         © 2025 Mini Game Hub
     </footer>
 
+    <!-- Hub Script ONLY -->
     <script src="script/script.js"></script>
 
     <!-- Sound Effects -->
