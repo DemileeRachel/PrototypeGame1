@@ -1,0 +1,56 @@
+.back-link { color: inherit; text-decoration: none; opacity: 0.9; }
+
+.reaction-wrap { position: relative; }
+
+.hud{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.10);
+  border: 2px solid rgba(0,0,0,0.18);
+  font-size: 10px;
+}
+
+.hud-item { opacity: 0.95; }
+
+.box{
+  width: 100%;
+  min-height: 280px;
+  border-radius: 18px;
+  border: 4px solid rgba(0,0,0,0.25);
+  background: rgba(255,255,255,0.08);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 18px;
+  user-select: none;
+}
+
+.box-text{
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.box-sub{
+  font-size: 10px;
+  opacity: 0.88;
+  line-height: 1.5;
+}
+
+.waiting { /* neutral */ }
+.ready { /* green (use generic; your theme can override if you like) */ background: rgba(80, 255, 160, 0.22); }
+.toosoon { background: rgba(255, 80, 80, 0.20); }
+.running { background: rgba(255, 230, 80, 0.18); }
+
+.tips{
+  margin-top: 12px;
+  font-size: 10px;
+  opacity: 0.85;
+  line-height: 1.6;
+}
