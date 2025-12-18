@@ -274,3 +274,45 @@ footer{
   color: #b9daff;
   z-index: 12;
 }
+html, body {
+  height: 100%;
+}
+
+/* FULL PAGE BACKGROUND (prevents white) */
+body{
+  background:
+    /* subtle top glow */
+    radial-gradient(circle at 70% 10%, rgba(255,255,255,0.18), rgba(255,255,255,0) 35%),
+    /* vertical sky depth all the way down */
+    linear-gradient(to bottom,
+      #3aaeff 0%,
+      #6ac6ff 22%,
+      #7ed6ff 45%,
+      #9be3ff 70%,
+      #bfefff 100%
+    );
+  background-attachment: fixed;
+}
+/* soft moving haze over the full page */
+body::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.08;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.10),
+      rgba(255,255,255,0.10) 1px,
+      rgba(0,0,0,0.06) 1px,
+      rgba(0,0,0,0.06) 3px
+    );
+  animation: hazeDrift 12s ease-in-out infinite;
+}
+
+@keyframes hazeDrift{
+  0%,100%{ transform: translateY(0); }
+  50%{ transform: translateY(10px); }
+}
