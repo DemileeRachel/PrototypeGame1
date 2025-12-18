@@ -63,3 +63,16 @@ window.addEventListener("scroll", () => {
   const offset = window.scrollY * 0.2;
   document.body.style.backgroundPosition = `center ${offset}px`;
 });
+document.addEventListener("mousemove", (e) => {
+  const sky = document.querySelector(".sky");
+  const far = document.querySelector(".cloud-far");
+  const near = document.querySelector(".cloud-near");
+  if (!sky || !far || !near) return;
+
+  const x = (e.clientX / window.innerWidth) - 0.5;
+  const y = (e.clientY / window.innerHeight) - 0.5;
+
+  far.style.transform = `translate(${x * 6}px, ${y * 2}px)`;
+  near.style.transform = `translate(${x * 12}px, ${y * 4}px)`;
+});
+// End of hub script.js

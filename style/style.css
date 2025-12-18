@@ -15,50 +15,103 @@ img {
 }
 
 /* === FULL SKY (background blue) === */
-.sky {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 140px; /* taller to match your layout */
-    background: #6ac6ff;
-    z-index: -2;
+/* === FULL SKY (depth) === */
+.sky{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 180px;               /* a bit taller = more “scene” */
+  z-index: -2;
+  overflow: hidden;
+
+  /* layered sky depth */
+  background:
+    radial-gradient(circle at 70% 30%, rgba(255,255,255,0.45), rgba(255,255,255,0) 45%),
+    linear-gradient(to bottom, #4fb8ff 0%, #6ac6ff 45%, #78d2ff 100%);
 }
 
-/* === LARGE CLOUD STRIP (pixel perfect) === */
-.cloud-layer {
-    position: fixed;
-    top: 0;            /* touches top of screen */
-    left: 0;
-    width: 100%;
-    height: 120px;
-
-    /* Repeat your clouds horizontally */
-    background-image: 
-        url("../assets/images/cloudvar1.png"),
-        url("../assets/images/cloudvar2.png"),
-        url("../assets/images/cloudvar1.png"),
-        url("../assets/images/cloudvar2.png");
-
-    background-repeat: repeat-x;
-    background-size: 200px auto;  /* 🔥 bigger clouds */
-    background-position:
-        0px 10px,
-        200px 35px,
-        400px 20px,
-        600px 45px;
-
-    /* Optional scroll animation */
-    animation: cloudScroll 50s linear infinite;
-
-    z-index: -1;
+/* subtle vignette + noise overlay for depth */
+.sky::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.12) 70%),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.03),
+      rgba(255,255,255,0.03) 1px,
+      rgba(0,0,0,0.02) 1px,
+      rgba(0,0,0,0.02) 2px
+    );
+  mix-blend-mode: soft-light;
+  opacity: 0.65;
 }
 
-/* Cloud movement */
-@keyframes cloudScroll {
-    from { background-position-x: 0, 200px, 400px, 600px; }
-    to   { background-position-x: -800px, -600px, -400px, -200px; }
+/* sun glow (light source) */
+.sky::after{
+  content:"";
+  position:absolute;
+  width: 240px;
+  height: 240px;
+  right: -40px;
+  top: -60px;
+  background: radial-gradient(circle, rgba(255,255,255,0.55), rgba(255,255,255,0) 70%);
+  filter: blur(2px);
+  opacity: 0.85;
 }
+
+/* === CLOUD LAYERS (parallax) === */
+.cloud-layer{
+  position: absolute;
+  left: 0;
+  width: 200%;
+  height: 140px;
+  top: 0;
+  background-repeat: repeat-x;
+  image-rendering: pixelated;
+  will-change: transform;
+}
+
+/* Far clouds: smaller + slower + higher = depth */
+.cloud-far{
+  top: 12px;
+  opacity: 0.55;
+  filter: blur(0.2px);
+  background-image:
+    url("../assets/images/cloudvar1.png"),
+    url("../assets/images/cloudvar2.png");
+  background-size: 140px auto;
+  background-position: 0px 28px, 180px 18px;
+  animation: cloudFar 85s linear infinite;
+}
+
+/* Near clouds: bigger + faster + lower = foreground */
+.cloud-near{
+  top: 0px;
+  opacity: 0.9;
+  background-image:
+    url("../assets/images/cloudvar1.png"),
+    url("../assets/images/cloudvar2.png"),
+    url("../assets/images/cloudvar1.png"),
+    url("../assets/images/cloudvar2.png");
+  background-size: 220px auto;
+  background-position: 0px 10px, 220px 35px, 440px 20px, 660px 45px;
+  animation: cloudNear 48s linear infinite;
+}
+
+@keyframes cloudFar{
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes cloudNear{
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
 
 /* === HEADER === */
 header {
@@ -290,4 +343,11 @@ footer {
   text-shadow:
     4px 4px 0 rgba(0,0,0,0.25),
     -2px -2px 0 rgba(255,255,255,0.15);
+}
+@keyframes skyBreath{
+  0%,100% { filter: saturate(1) brightness(1); }
+  50%     { filter: saturate(1.05) brightness(1.02); }
+}
+.sky{
+  animation: skyBreath 8s ease-in-out infinite;
 }
