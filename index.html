@@ -1,109 +1,132 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini Game Hub</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Game Hub</title>
 
-    <!-- Pixel font -->
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <!-- Pixel font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
-    <!-- Main styles -->
-    <link rel="stylesheet" href="style/style.css">
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 
-<body>
+<body class="hub">
+  <div class="scene">
 
-    <!-- 🌥 SKY WRAPPER (holds clouds inside) -->
-  <div class="sky">
-  <div class="cloud-layer cloud-far"></div>
-  <div class="cloud-layer cloud-near"></div>
-</div>
+    <!-- Clouds band -->
+    <div class="clouds" aria-hidden="true"></div>
 
-<div class="horizon"></div>
-<!-- 🕊 Birds + ✨ Particles -->
-<div id="birds"></div>
-<div id="particles"></div>
+    <!-- Title under clouds -->
+    <header class="hud">
+      <h1 class="title">🎮 Mini Game Hub</h1>
+      <p class="subtitle">✨ Select a game to play ✨</p>
 
-    <!-- Header -->
-    <header>
-        <h1>🎮 Mini Game Hub</h1>
-        <p>Select a game to play</p>
+      <p class="counter">
+        🧮 Plays: <span id="play-count">0</span>
+      </p>
     </header>
 
-    <!-- Game Panel -->
-    <section class="panel">
-        <div class="game-list">
+    <!-- Main content -->
+    <main class="content">
+      <section class="hub-panel">
+        <div class="game-grid">
 
-            <!-- Clicker Game -->
-            <div class="game-card" onclick="playClick()">
-                <img class="frame" src="assets/images/GreenUI.png" alt="">
-                <div class="game-icon">🟦</div>
-                <p class="game-title">🟦 Clicker Game</p>
-                <button class="pixel-btn"
-                    onclick="playSelect(event); window.location.href='clicker.html';">
-                    ▶ Play
-                </button>
+          <!-- Clicker -->
+          <article class="game-card">
+            <div class="card-inner">
+              <div class="icon-frame">
+                <img src="assets/icons/clicker.png" alt="" class="card-icon">
+              </div>
+              <h3 class="card-title">🟦 Clicker Game</h3>
+              <a class="pixel-btn"
+                 href="clicker.html"
+                 data-tooltip="Built with JS + Canvas"
+                 data-game="Clicker Game">
+                ▶ Play
+              </a>
             </div>
+          </article>
 
-            <!-- Memory Match -->
-            <div class="game-card" onclick="playClick()">
-                <img class="frame" src="assets/images/GreenUI.png" alt="">
-                <div class="game-icon">🧠</div>
-                <p class="game-title">🧠 Memory Match</p>
-                <button class="pixel-btn"
-  onclick="playSelect(event); window.location.href='memory.html';">
-  ▶ Play
-</button>
-
+          <!-- Memory -->
+          <article class="game-card">
+            <div class="card-inner">
+              <div class="icon-frame">
+                <img src="assets/icons/memory.png" alt="" class="card-icon">
+              </div>
+              <h3 class="card-title">🧠 Memory Match</h3>
+              <a class="pixel-btn"
+                 href="memory.html"
+                 data-tooltip="Built with JS + Canvas"
+                 data-game="Memory Match">
+                ▶ Play
+              </a>
             </div>
+          </article>
 
-            <!-- Reaction Test -->
-            <div class="game-card" onclick="playClick()">
-                <img class="frame" src="assets/images/GreenUI.png" alt="">
-                <div class="game-icon">⚡</div>
-                <p class="game-title">⚡ Reaction Test</p>
-                <button class="pixel-btn"
-  onclick="playSelect(event); window.location.href='reaction.html';">
-  ▶ Play
-</button>
-
+          <!-- Reaction -->
+          <article class="game-card">
+            <div class="card-inner">
+              <div class="icon-frame">
+                <img src="assets/icons/reaction.png" alt="" class="card-icon">
+              </div>
+              <h3 class="card-title">⚡ Reaction Test</h3>
+              <a class="pixel-btn"
+                 href="reaction.html"
+                 data-tooltip="Built with JS + Canvas"
+                 data-game="Reaction Test">
+                ▶ Play
+              </a>
             </div>
+          </article>
 
-            <!-- Snake Lite -->
-            <div class="game-card" onclick="playClick()">
-                <img class="frame" src="assets/images/GreenUI.png" alt="">
-                <div class="game-icon">🐍</div>
-                <p class="game-title">🐍 Snake Lite</p>
-                <button class="pixel-btn"
-  onclick="playSelect(event); window.location.href='snake.html';">
-  ▶ Play
-</button>
-
+          <!-- Snake -->
+          <article class="game-card">
+            <div class="card-inner">
+              <div class="icon-frame">
+                <img src="assets/icons/snake.png" alt="" class="card-icon">
+              </div>
+              <h3 class="card-title">🐍 Snake Lite</h3>
+              <a class="pixel-btn"
+                 href="snake.html"
+                 data-tooltip="Built with JS + Canvas"
+                 data-game="Snake Lite">
+                ▶ Play
+              </a>
             </div>
+          </article>
 
         </div>
-    </section>
+      </section>
+    </main>
 
-    <!-- Slime Mascot -->
-    <img class="slime" src="assets/images/mrslime.png" alt="slime">
+    <!-- Slime -->
+    <img class="slime" src="assets/images/SpriteSlime.png" alt="Slime character">
 
-    <!-- Grass Bottom -->
-    <div class="grass"></div>
+    <!-- Ground -->
+    <div class="ground" aria-hidden="true"></div>
 
-    <!-- Footer -->
-    <footer>
-        © 2025 Mini Game Hub
+    <footer class="footer">
+      🌸 © 2025 Mini Game Hub
     </footer>
 
-    <!-- Hub Script ONLY -->
-    <script src="script/script.js"></script>
+  </div>
 
-    <!-- Sound Effects -->
-    <audio id="sfx-click" src="assets/sounds/click.wav" preload="auto"></audio>
-    <audio id="sfx-select" src="assets/sounds/select.wav" preload="auto"></audio>
-    <audio id="sfx-hover" src="assets/sounds/hover.wav" preload="auto"></audio>
-    <audio id="sfx-slime" src="assets/sounds/slime.wav" preload="auto"></audio>
+  <!-- Tiny click tracker -->
+  <script>
+    const countEl = document.getElementById("play-count");
+    const key = "miniHubPlayCount";
+    const current = Number(localStorage.getItem(key) || 0);
+    countEl.textContent = current;
 
+    document.querySelectorAll(".pixel-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const next = Number(localStorage.getItem(key) || 0) + 1;
+        localStorage.setItem(key, String(next));
+      });
+    });
+  </script>
 </body>
 </html>

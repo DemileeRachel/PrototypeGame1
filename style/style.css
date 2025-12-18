@@ -1,341 +1,352 @@
-/* ===============================
-   GLOBAL
+/* ================================
+   ROOT + RESET
 ================================ */
+:root{
+  --font: "Press Start 2P", system-ui, sans-serif;
+
+  /* Sky */
+  --sky-top: #20a8ff;
+  --sky-mid: #79cfff;
+  --sky-bottom: #c7f2ff;
+
+  /* Panel */
+  --panel-green: #1a8b1a;
+  --panel-green-dark: #0f5f0f;
+  --panel-green-deeper: #0b3f0b;
+
+  /* Pixel border accents */
+  --border-bright: #7cff52;
+  --border-mid: #3aa83a;
+  --border-dark: #0c3b0c;
+
+  /* Button */
+  --btn-purple: #4c45c9;
+  --btn-purple-dark: #2b278d;
+  --btn-text: #ffffff;
+
+  /* Layout */
+  --cloud-band-h: 220px;
+  --ground-h: 96px;
+}
+
+*{ box-sizing: border-box; }
 html, body{
   height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body{
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  font-family: "Press Start 2P", monospace;
-  background:
-    linear-gradient(
-      to bottom,
-      #3aaeff 0%,
-      #6ac6ff 25%,
-      #7ed6ff 55%,
-      #9be3ff 75%,
-      #bfefff 100%
-    );
-  color: #ffffff;
-  text-align: center;
+  font-family: var(--font);
   overflow-x: hidden;
+  background: linear-gradient(var(--sky-top), var(--sky-mid), var(--sky-bottom));
 }
 
-img{
-  image-rendering: pixelated;
-}
-
-/* ===============================
-   SKY
+/* ================================
+   SCENE (the key fix)
+   Everything lives inside this
 ================================ */
-.sky{
-  position: fixed;
-  top: 0;
-  left: 0;
+.scene{
+  position: relative;
+  min-height: 100vh;
   width: 100%;
-  height: 160px;
-  z-index: 0;
-  overflow: hidden;
-
-  background:
-    linear-gradient(to bottom, #1e9bff 0%, #6ac6ff 100%);
-
-  animation: skyBreath 8s ease-in-out infinite;
 }
 
-@keyframes skyBreath{
-  0%,100%{ filter: brightness(1); }
-  50%{ filter: brightness(1.05); }
-}
-
-/* ===============================
-   CLOUDS
+/* ================================
+   CLOUDS (fills full top)
 ================================ */
-.cloud-layer{
+.clouds{
   position: absolute;
   top: 0;
   left: 0;
-  width: 200%;
-  height: 140px;
+  width: 100%;
+  height: var(--cloud-band-h);
+  z-index: 1;
+
+  /* Replace with your clouds image */
+  background-image: url("../assets/images/clouds.png");
   background-repeat: repeat-x;
-  image-rendering: pixelated;
-  will-change: transform;
+  background-position: top center;
+  background-size: auto 100%;
+
+  /* subtle haze to blend */
+  filter: saturate(1.05);
 }
 
-/* far clouds */
-.cloud-far{
-  opacity: 0.6;
-  background-image:
-    url("../assets/images/cloudvar1.png"),
-    url("../assets/images/cloudvar2.png");
-  background-size: 140px auto;
-  background-position: 0 30px, 200px 15px;
-  animation: cloudFar 90s linear infinite;
-}
-
-/* near clouds */
-.cloud-near{
-  opacity: 0.95;
-  background-image:
-    url("../assets/images/cloudvar1.png"),
-    url("../assets/images/cloudvar2.png"),
-    url("../assets/images/cloudvar1.png"),
-    url("../assets/images/cloudvar2.png");
-  background-size: 220px auto;
-  background-position: 0 10px, 220px 35px, 440px 20px, 660px 45px;
-  animation: cloudNear 50s linear infinite;
-}
-
-@keyframes cloudFar{
-  from{ transform: translateX(0); }
-  to{ transform: translateX(-50%); }
-}
-
-@keyframes cloudNear{
-  from{ transform: translateX(0); }
-  to{ transform: translateX(-50%); }
-}
-
-/* ===============================
-   DISTANT HORIZON (better hills)
+/* ================================
+   HUD TITLE (under clouds)
 ================================ */
-.horizon{
-  position: fixed;
-  left: 0;
-  top: 145px;                 /* just under clouds */
-  width: 100%;
-  height: 260px;              /* smaller band = distant */
-  z-index: 1;
-  pointer-events: none;
-
-  background:
-    /* mist fade */
-    linear-gradient(
-      to bottom,
-      rgba(255,255,255,0.18) 0%,
-      rgba(255,255,255,0.10) 35%,
-      rgba(255,255,255,0.03) 70%,
-      rgba(255,255,255,0.00) 100%
-    ),
-
-    /* rolling hills (elliptical blobs, no giant dome) */
-    radial-gradient(120px 70px at 8%  85%, rgba(30,130,30,0.22) 0 70%, transparent 71%),
-    radial-gradient(160px 85px at 22% 88%, rgba(30,130,30,0.18) 0 70%, transparent 71%),
-    radial-gradient(140px 80px at 38% 86%, rgba(30,130,30,0.20) 0 70%, transparent 71%),
-    radial-gradient(180px 90px at 55% 90%, rgba(30,130,30,0.17) 0 70%, transparent 71%),
-    radial-gradient(150px 80px at 72% 86%, rgba(30,130,30,0.20) 0 70%, transparent 71%),
-    radial-gradient(130px 75px at 88% 88%, rgba(30,130,30,0.19) 0 70%, transparent 71%);
-
-  opacity: 0.85;
-  animation: horizonFloat 10s ease-in-out infinite;
-}
-
-@keyframes horizonFloat{
-  0%,100%{ transform: translateY(0); }
-  50%{ transform: translateY(6px); }
-}
-
-/* ===============================
-   CONTENT STACKING
-================================ */
-header, .panel, .slime, .grass, footer{
+.hud{
   position: relative;
-  z-index: 5;
-}
-
-/* ===============================
-   HEADER
-================================ */
-header{
-  margin-top: 12px;
-  text-shadow: 0 0 6px #3b79ff;
-}
-
-header h1{ font-size: 22px; }
-header p{ font-size: 12px; margin-top: 10px; }
-
-/* ===============================
-   PANEL
-================================ */
-.panel{
-  margin: 30px auto;
-  width: 90%;
-  max-width: 900px;
-  background: #1b7d1b;
-  border: 6px solid #0f4f0f;
-  border-radius: 6px;
-  padding: 25px;
-  box-shadow: inset 0 0 0 4px #2da32d;
-}
-
-.game-list{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 25px;
-}
-
-/* ===============================
-   GAME CARDS
-================================ */
-.game-card{
-  position: relative;
-  cursor: pointer;
-  transition: transform 0.2s ease, filter 0.2s ease;
-}
-
-.game-card:hover{
-  transform: translateY(-6px);
-  filter: brightness(1.15);
-}
-
-.frame{
-  width: 100%;
-  z-index: 1;
-}
-
-.game-icon{
-  position: absolute;
-  left: 50%;
-  top: 38%;
-  transform: translate(-50%, -50%);
-  font-size: 96px;
-  opacity: 0.95;
-  pointer-events: none;
   z-index: 2;
-  text-shadow:
-    4px 4px 0 rgba(0,0,0,0.25),
-    -2px -2px 0 rgba(255,255,255,0.15);
+
+  /* push under cloud band a bit */
+  padding-top: calc(var(--cloud-band-h) - 70px);
+  text-align: center;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 
-.game-title{
-  margin-top: -50px;
-  font-size: 12px;
-  color: #eaffea;
-  text-shadow: 0 0 4px #1f8b1f;
-  z-index: 3;
+.title{
+  margin: 0;
+  font-size: clamp(18px, 2.2vw, 28px);
+  letter-spacing: 1px;
+  color: #ffffff;
+  text-shadow: 0 4px 0 rgba(0,0,0,0.25);
+}
+
+.subtitle{
+  margin: 10px 0 6px;
+  font-size: clamp(10px, 1.2vw, 12px);
+  color: rgba(255,255,255,0.85);
+  text-shadow: 0 3px 0 rgba(0,0,0,0.18);
+}
+
+.counter{
+  margin: 8px 0 0;
+  font-size: 10px;
+  color: rgba(255,255,255,0.75);
+  text-shadow: 0 3px 0 rgba(0,0,0,0.18);
+}
+
+/* ================================
+   MAIN CONTENT (panel sits lower)
+================================ */
+.content{
   position: relative;
+  z-index: 2;
+
+  /* Make sure nothing overlaps ground */
+  padding-bottom: calc(var(--ground-h) + 56px);
+
+  /* pull panel down so it doesn't touch clouds */
+  margin-top: 26px;
+
+  display: flex;
+  justify-content: center;
+  padding-left: 14px;
+  padding-right: 14px;
 }
 
-/* ===============================
-   BUTTONS
+.hub-panel{
+  width: min(980px, 100%);
+  padding: 18px 16px;
+
+  background: linear-gradient(#1f981f, var(--panel-green));
+  border: 6px solid var(--panel-green-dark);
+  box-shadow:
+    0 0 0 4px var(--panel-green-deeper),
+    0 10px 0 rgba(0,0,0,0.25);
+
+  border-radius: 6px;
+}
+
+/* grid of cards */
+.game-grid{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.game-card{
+  background: linear-gradient(#1c7f1c, #0f5f0f);
+  border: 4px solid var(--border-dark);
+  box-shadow:
+    0 0 0 3px var(--border-mid),
+    0 0 0 6px rgba(0,0,0,0.25);
+  border-radius: 4px;
+  padding: 12px;
+}
+
+.card-inner{
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  text-align: center;
+}
+
+.icon-frame{
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(#0f6a0f, #0b4b0b);
+  border: 4px solid var(--border-mid);
+  box-shadow:
+    inset 0 0 0 4px rgba(0,0,0,0.25),
+    0 6px 0 rgba(0,0,0,0.25);
+  border-radius: 6px;
+
+  display: grid;
+  place-items: center;
+}
+
+.card-icon{
+  width: 72px;
+  height: 72px;
+  image-rendering: pixelated;
+}
+
+.card-title{
+  margin: 0;
+  font-size: 10px;
+  color: #eaffea;
+  text-shadow: 0 3px 0 rgba(0,0,0,0.25);
+}
+
+/* ================================
+   PIXEL BUTTON (matches your hub vibe)
 ================================ */
 .pixel-btn{
-  margin-top: 10px;
-  padding: 8px 16px;
-  font-size: 10px;
-  background: #4a2bb4;
-  color: #fff;
-  border: 3px solid #2c1b6d;
-  border-radius: 6px;
-  cursor: pointer;
-  box-shadow: 0 0 6px #6d45ff;
-  transition: transform 0.2s ease, background 0.2s ease;
   position: relative;
-  z-index: 3;
+  display: inline-block;
+  padding: 8px 14px;
+
+  background: linear-gradient(var(--btn-purple), #3e38b8);
+  border: 4px solid var(--btn-purple-dark);
+  color: var(--btn-text);
+  text-decoration: none;
+
+  font-size: 10px;
+  line-height: 1;
+  border-radius: 6px;
+
+  box-shadow:
+    0 6px 0 rgba(0,0,0,0.25),
+    inset 0 0 0 3px rgba(255,255,255,0.08);
+
+  transform: translateY(0);
+  transition: transform 120ms ease;
 }
 
 .pixel-btn:hover{
-  background: #6c3dff;
-  transform: scale(1.1);
+  transform: translateY(-1px);
 }
 
-/* ===============================
-   SLIME
+.pixel-btn:active{
+  transform: translateY(2px);
+  box-shadow:
+    0 3px 0 rgba(0,0,0,0.25),
+    inset 0 0 0 3px rgba(255,255,255,0.08);
+}
+
+/* Tooltip */
+.pixel-btn[data-tooltip]::after{
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  transform: translateX(-50%);
+  white-space: nowrap;
+
+  background: rgba(0,0,0,0.85);
+  color: #fff;
+  padding: 8px 10px;
+  border: 2px solid rgba(255,255,255,0.2);
+  border-radius: 6px;
+
+  font-size: 9px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 140ms ease;
+}
+
+.pixel-btn[data-tooltip]::before{
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 2px);
+  transform: translateX(-50%);
+  border: 7px solid transparent;
+  border-top-color: rgba(0,0,0,0.85);
+  opacity: 0;
+  transition: opacity 140ms ease;
+}
+
+.pixel-btn:hover::after,
+.pixel-btn:hover::before{
+  opacity: 1;
+}
+
+/* ================================
+   SLIME (floats in sky ABOVE panels)
 ================================ */
 .slime{
-  position: fixed;
-  bottom: 70px;
+  position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  width: 100px;
-  z-index: 11;
-  animation: slimeBounce 1s ease-in-out infinite;
+  bottom: calc(var(--ground-h) + 20px);
+  width: 96px;
+  height: auto;
+  z-index: 2;
+  image-rendering: pixelated;
+
+  /* optional: tiny float vibe */
+  animation: floaty 2.2s ease-in-out infinite;
 }
 
-@keyframes slimeBounce{
-  0%,100%{ transform: translate(-50%, 0); }
-  50%{ transform: translate(-50%, -40px); }
+@keyframes floaty{
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-8px); }
 }
 
-/* ===============================
-   GRASS + FOOTER
+/* ================================
+   GROUND (pinned to bottom INSIDE scene)
 ================================ */
-.grass{
-  position: fixed;
+.ground{
+  position: absolute;
+  left: 0;
   bottom: 0;
+  width: 100%;
+  height: var(--ground-h);
+  z-index: 3;
+
+  /* Replace with your grass strip */
+  background-image: url("../assets/images/grass.png");
+  background-repeat: repeat-x;
+  background-position: bottom center;
+  background-size: auto 100%;
+
+  image-rendering: pixelated;
+}
+
+/* Footer sits just above grass */
+.footer{
+  position: absolute;
   left: 0;
+  bottom: calc(var(--ground-h) + 10px);
   width: 100%;
-  height: 70px;
-  background: url("../assets/images/Grass.png") repeat-x;
-  background-size: contain;
-  z-index: 10;
+  text-align: center;
+  z-index: 4;
+
+  font-size: 9px;
+  color: rgba(0,0,0,0.35);
 }
 
-footer{
-  position: fixed;
-  bottom: 72px;
-  width: 100%;
-  font-size: 10px;
-  color: #b9daff;
-  z-index: 12;
-}
-
-/* ===============================
-   BIRDS + PARTICLES LAYERS
+/* ================================
+   RESPONSIVE
 ================================ */
-#birds, #particles{
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 3; /* above sky/horizon, below panel */
+@media (max-width: 980px){
+  .game-grid{
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+  }
 }
 
-/* ---- Birds (pixel V) ---- */
-.bird{
-  position: absolute;
-  width: 18px;
-  height: 10px;
-  opacity: 0.9;
-  filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.18));
-}
+@media (max-width: 520px){
+  :root{
+    --cloud-band-h: 190px;
+    --ground-h: 88px;
+  }
 
-.bird::before,
-.bird::after{
-  content:"";
-  position: absolute;
-  top: 5px;
-  width: 10px;
-  height: 0;
-  border-top: 2px solid rgba(255,255,255,0.75);
-}
+  .game-grid{
+    grid-template-columns: 1fr;
+  }
 
-.bird::before{
-  left: 0;
-  transform: rotate(18deg);
-  transform-origin: left center;
-}
+  .icon-frame{
+    width: 140px;
+    height: 140px;
+  }
 
-.bird::after{
-  right: 0;
-  transform: rotate(-18deg);
-  transform-origin: right center;
-}
-
-@keyframes flap{
-  0%,100%{ transform: translateY(0); }
-  50%{ transform: translateY(-1px); }
-}
-
-/* ---- Particles ---- */
-.particle{
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  opacity: 0.9;
-  background: rgba(255,255,255,0.95);
-  box-shadow: 0 0 8px rgba(255,255,255,0.55);
+  .card-icon{
+    width: 84px;
+    height: 84px;
+  }
 }
