@@ -1,37 +1,41 @@
-/* === GLOBAL LAYOUT === */
-body {
-    margin: 0;
-    padding: 0;
-    font-family: "Press Start 2P", monospace;
-    height: 100%;
-    background: #6ac6ff;
-    color: #ffffff;
-    text-align: center;
+/* ===============================
+   GLOBAL
+================================ */
+body{
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: "Press Start 2P", monospace;
+  background: transparent; /* IMPORTANT */
+  color: #ffffff;
+  text-align: center;
+  overflow-x: hidden;
 }
 
-/* Pixel-perfect crisp images */
-img {
-    image-rendering: pixelated;
+img{
+  image-rendering: pixelated;
 }
 
-/* === FULL SKY (background blue) === */
-/* === FULL SKY (depth) === */
+/* ===============================
+   SKY (DEPTH + ANIMATION)
+================================ */
 .sky{
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 180px;               /* a bit taller = more “scene” */
-  z-index: -2;
+  height: 180px;
+  z-index: 0;
   overflow: hidden;
 
-  /* layered sky depth */
   background:
     radial-gradient(circle at 70% 30%, rgba(255,255,255,0.45), rgba(255,255,255,0) 45%),
     linear-gradient(to bottom, #4fb8ff 0%, #6ac6ff 45%, #78d2ff 100%);
+
+  animation: skyBreath 8s ease-in-out infinite;
 }
 
-/* subtle vignette + noise overlay for depth */
+/* vignette + subtle noise */
 .sky::before{
   content:"";
   position:absolute;
@@ -50,7 +54,7 @@ img {
   opacity: 0.65;
 }
 
-/* sun glow (light source) */
+/* sun glow */
 .sky::after{
   content:"";
   position:absolute;
@@ -63,23 +67,27 @@ img {
   opacity: 0.85;
 }
 
-/* === CLOUD LAYERS (parallax) === */
+@keyframes skyBreath{
+  0%,100%{ filter: saturate(1) brightness(1); }
+  50%{ filter: saturate(1.05) brightness(1.02); }
+}
+
+/* ===============================
+   CLOUDS (PARALLAX)
+================================ */
 .cloud-layer{
   position: absolute;
   left: 0;
   width: 200%;
   height: 140px;
-  top: 0;
   background-repeat: repeat-x;
   image-rendering: pixelated;
   will-change: transform;
 }
 
-/* Far clouds: smaller + slower + higher = depth */
 .cloud-far{
   top: 12px;
   opacity: 0.55;
-  filter: blur(0.2px);
   background-image:
     url("../assets/images/cloudvar1.png"),
     url("../assets/images/cloudvar2.png");
@@ -88,9 +96,8 @@ img {
   animation: cloudFar 85s linear infinite;
 }
 
-/* Near clouds: bigger + faster + lower = foreground */
 .cloud-near{
-  top: 0px;
+  top: 0;
   opacity: 0.9;
   background-image:
     url("../assets/images/cloudvar1.png"),
@@ -103,251 +110,167 @@ img {
 }
 
 @keyframes cloudFar{
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from{ transform: translateX(0); }
+  to{ transform: translateX(-50%); }
 }
 
 @keyframes cloudNear{
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from{ transform: translateX(0); }
+  to{ transform: translateX(-50%); }
 }
 
-
-/* === HEADER === */
-header {
-    margin-top: 10px;
-    color: #ffffff;
-    text-shadow: 0 0 6px #3b79ff;
-}
-
-header h1 {
-    font-size: 22px;
-}
-
-header p {
-    font-size: 12px;
-    margin-top: 10px;
-}
-
-/* === GAME PANEL === */
-.panel {
-    margin: 30px auto;
-    width: 90%;
-    max-width: 900px;
-    background: #1b7d1b;
-    border: 6px solid #0f4f0f;
-    border-radius: 6px;
-    padding: 25px;
-    box-shadow: inset 0 0 0 4px #2da32d;
-}
-
-.game-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 25px;
-}
-
-/* === GAME CARD === */
-.game-card {
-    cursor: pointer;
-    transition: transform 0.2s ease, filter 0.2s ease;
-}
-
-.game-card:hover {
-    transform: translateY(-6px);
-    filter: brightness(1.2);
-}
-
-/* Card frame */
-.frame {
-    width: 100%;
-    height: auto;
-}
-
-/* Card title */
-.game-title {
-    margin-top: -50px;
-    font-size: 12px;
-    color: #eaffea;
-    text-shadow: 0 0 4px #1f8b1f;
-}
-
-/* === PIXEL BUTTON === */
-.pixel-btn {
-    margin-top: 10px;
-    padding: 8px 16px;
-    font-size: 10px;
-    background: #4a2bb4;
-    color: #fff;
-    border: 3px solid #2c1b6d;
-    border-radius: 6px;
-    cursor: pointer;
-    box-shadow: 0 0 6px #6d45ff;
-    transition: transform 0.2s ease, background 0.2s ease;
-}
-
-.pixel-btn:hover {
-    background: #6c3dff;
-    transform: scale(1.1);
-}
-
-/* === SLIME === */
-
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-12px); }
-}
-
-/* Slime wiggle (JS adds class) */
-.slime-wiggle {
-    animation: wiggle 0.35s ease;
-}
-.slime {
-    position: fixed;
-    bottom: 70px; /* EXACTLY same as .grass height */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    image-rendering: pixelated;
-    z-index: 11;
-    animation: slimeBounce 1s ease-in-out infinite;
-}
-
-/* Bounce so it lands perfectly on grass */
-@keyframes slimeBounce {
-    0%, 100% { transform: translate(-50%, 0); }     /* touching grass */
-    50%      { transform: translate(-50%, -40px); } /* jump height */
-}
-
-
-@keyframes wiggle {
-    0%   { transform: translateY(0) rotate(0); }
-    25%  { transform: translateY(-4px) rotate(-4deg); }
-    50%  { transform: translateY(0) rotate(3deg); }
-    75%  { transform: translateY(-2px) rotate(-3deg); }
-    100% { transform: translateY(0) rotate(0); }
-}
-
-/* === SPARKLE PARTICLES === */
-.sparkle {
-    position: fixed;
-    width: 6px;
-    height: 6px;
-    background: #ffffff;
-    border-radius: 50%;
-    box-shadow: 0 0 8px #fff;
-    animation: sparkleFade 0.5s linear;
-    pointer-events: none;
-}
-
-@keyframes sparkleFade {
-    0%   { opacity: 1; transform: scale(1); }
-    100% { opacity: 0; transform: scale(0); }
-}
-
-/* === GRASS === */
-.grass {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 70px; /* IMPORTANT: exact height we use for slime and footer */
-    background: url("../assets/images/Grass.png") repeat-x;
-    background-size: contain;
-    z-index: 10;
-}
-
-
-/* === FOOTER === */
-footer {
-    position: fixed;
-    bottom: 72px; /* 2px gap above grass */
-    width: 100%;
-    font-size: 10px;
-    text-align: center;
-    color: #b9daff;
-    z-index: 12;
-}
-.game-card {
+/* ===============================
+   CONTENT LAYERING
+================================ */
+header, .panel, footer, .slime, .grass{
   position: relative;
+  z-index: 2;
+}
+
+/* ===============================
+   HEADER
+================================ */
+header{
+  margin-top: 12px;
+  text-shadow: 0 0 6px #3b79ff;
+}
+
+header h1{ font-size: 22px; }
+header p{ font-size: 12px; margin-top: 10px; }
+
+/* ===============================
+   PANEL
+================================ */
+.panel{
+  margin: 30px auto;
+  width: 90%;
+  max-width: 900px;
+  background: #1b7d1b;
+  border: 6px solid #0f4f0f;
+  border-radius: 6px;
+  padding: 25px;
+  box-shadow: inset 0 0 0 4px #2da32d;
+}
+
+.game-list{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 25px;
+}
+
+/* ===============================
+   GAME CARDS
+================================ */
+.game-card{
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.game-card:hover{
+  transform: translateY(-6px);
+  filter: brightness(1.15);
+}
+
+.frame{
+  width: 100%;
+  z-index: 1;
 }
 
 .game-icon{
   position: absolute;
   left: 50%;
-  top: 46%;
+  top: 38%;
   transform: translate(-50%, -50%);
-  font-size: 54px;          /* adjust to taste */
-  line-height: 1;
-  opacity: 0.9;
-  pointer-events: none;     /* so clicks still work */
-  filter: drop-shadow(0 4px 0 rgba(0,0,0,0.25));
-}
-
-/* Keep title + button above the icon */
-.game-title,
-.game-card .pixel-btn{
-  position: relative;
-  z-index: 2;
-}
-
-/* Make sure frame stays behind everything */
-.frame{
-  position: relative;
-  z-index: 1;
-}
-/* === GAME ICON (emoji inside the frame) === */
-.game-card{
-  position: relative;
-}
-
-/* put the frame behind everything */
-.game-card .frame{
-  position: relative;
-  z-index: 1;
-}
-
-/* emoji sits on top of frame */
-.game-card .game-icon{
-  position: absolute;
-  left: 50%;
-  top: 42%; /* <-- better for your negative title margin */
-  transform: translate(-50%, -50%);
-  font-size: 52px;
+  font-size: 96px;
   line-height: 1;
   opacity: 0.95;
   pointer-events: none;
   z-index: 2;
-  filter: drop-shadow(0 3px 0 rgba(0,0,0,0.25));
-}
-
-/* title + button above the emoji */
-.game-card .game-title,
-.game-card .pixel-btn{
-  position: relative;
-  z-index: 3;
-}
-/* === BIG GAME ICON (fills the frame) === */
-.game-card .game-icon{
-  position: absolute;
-  left: 50%;
-  top: 38%;                     /* visual center of your GreenUI frame */
-  transform: translate(-50%, -50%);
-  font-size: 96px;              /* 🔥 fills the box */
-  line-height: 1;
-  opacity: 0.95;
-  pointer-events: none;
-  z-index: 2;
-
-  /* pixel-friendly depth */
   text-shadow:
     4px 4px 0 rgba(0,0,0,0.25),
     -2px -2px 0 rgba(255,255,255,0.15);
 }
-@keyframes skyBreath{
-  0%,100% { filter: saturate(1) brightness(1); }
-  50%     { filter: saturate(1.05) brightness(1.02); }
+
+.game-title{
+  margin-top: -50px;
+  font-size: 12px;
+  color: #eaffea;
+  text-shadow: 0 0 4px #1f8b1f;
+  z-index: 3;
+  position: relative;
 }
-.sky{
-  animation: skyBreath 8s ease-in-out infinite;
+
+/* ===============================
+   BUTTONS
+================================ */
+.pixel-btn{
+  margin-top: 10px;
+  padding: 8px 16px;
+  font-size: 10px;
+  background: #4a2bb4;
+  color: #fff;
+  border: 3px solid #2c1b6d;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 0 6px #6d45ff;
+  transition: transform 0.2s ease, background 0.2s ease;
+  z-index: 3;
+  position: relative;
+}
+
+.pixel-btn:hover{
+  background: #6c3dff;
+  transform: scale(1.1);
+}
+
+/* ===============================
+   SLIME
+================================ */
+.slime{
+  position: fixed;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  z-index: 11;
+  animation: slimeBounce 1s ease-in-out infinite;
+}
+
+@keyframes slimeBounce{
+  0%,100%{ transform: translate(-50%, 0); }
+  50%{ transform: translate(-50%, -40px); }
+}
+
+.slime-wiggle{ animation: wiggle 0.35s ease; }
+
+@keyframes wiggle{
+  0%{ transform: translateY(0) rotate(0); }
+  25%{ transform: translateY(-4px) rotate(-4deg); }
+  50%{ transform: translateY(0) rotate(3deg); }
+  75%{ transform: translateY(-2px) rotate(-3deg); }
+  100%{ transform: translateY(0) rotate(0); }
+}
+
+/* ===============================
+   GRASS + FOOTER
+================================ */
+.grass{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background: url("../assets/images/Grass.png") repeat-x;
+  background-size: contain;
+  z-index: 10;
+}
+
+footer{
+  position: fixed;
+  bottom: 72px;
+  width: 100%;
+  font-size: 10px;
+  color: #b9daff;
+  z-index: 12;
 }
