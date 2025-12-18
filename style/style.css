@@ -280,3 +280,61 @@ footer{
   color: #b9daff;
   z-index: 12;
 }
+/* ===============================
+   BIRDS + PARTICLES LAYERS
+================================ */
+#birds, #particles{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3; /* above sky/horizon, below panel (panel is z=5) */
+}
+
+/* ---- Birds (pixel V) ---- */
+.bird{
+  position: absolute;
+  width: 18px;
+  height: 10px;
+  opacity: 0.9;
+  filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.18));
+}
+
+/* make a V using borders */
+.bird::before,
+.bird::after{
+  content:"";
+  position: absolute;
+  top: 5px;
+  width: 10px;
+  height: 0;
+  border-top: 2px solid rgba(255,255,255,0.75);
+}
+
+.bird::before{
+  left: 0;
+  transform: rotate(18deg);
+  transform-origin: left center;
+}
+
+.bird::after{
+  right: 0;
+  transform: rotate(-18deg);
+  transform-origin: right center;
+}
+
+/* wing flap */
+@keyframes flap{
+  0%,100%{ transform: translateY(0); }
+  50%{ transform: translateY(-1px); }
+}
+
+/* ---- Particles ---- */
+.particle{
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  opacity: 0.9;
+  background: rgba(255,255,255,0.95);
+  box-shadow: 0 0 8px rgba(255,255,255,0.55);
+}

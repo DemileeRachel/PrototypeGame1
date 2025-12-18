@@ -75,4 +75,132 @@ document.addEventListener("mousemove", (e) => {
   far.style.transform = `translate(${x * 6}px, ${y * 2}px)`;
   near.style.transform = `translate(${x * 12}px, ${y * 4}px)`;
 });
-// End of hub script.js
+// ==============================
+// 🕊 Birds + ✨ Particles
+// ==============================
+document.addEventListener("DOMContentLoaded", () => {
+  const birdsLayer = document.getElementById("birds");
+  const particlesLayer = document.getElementById("particles");
+  if (!birdsLayer || !particlesLayer) return;
+
+  // ---------- Birds ----------
+  const BIRD_COUNT = 6;
+  const birds = [];
+
+  function spawnBird() {
+    const b = document.createElement("div");
+    b.className = "bird";
+    b.style.top = (20 + Math.random() * 120) + "px"; // stays in sky band
+    b.style.left = (-40 - Math.random() * 200) + "px";
+
+    const speed = 0.25 + Math.random() * 0.45; // px/ms
+    const bob = 8 + Math.random() * 10;       // bob amplitude
+    const flapSpeed = 0.7 + Math.random() * 0.8;
+
+    b.style.animation = `flap ${flapSpeed}s ease-in-out infinite`;
+    birdsLayer.appendChild(b);
+
+    return {
+      el: b,
+      x: parseFloat(b.style.left),
+      y: parseFloat(b.style.top),
+      speed,
+      bob,
+      phase: Math.random() * Math.PI * 2,
+    };
+  }
+
+  for (let i = 0; i < BIRD_COUNT; i++) birds.push(spawnBird());
+
+  // ---------- Particles ----------
+  const particles = [];
+  const MAX_PARTICLES = 28;
+
+  function spawnParticle() {
+    const p = document.createElement("div");
+    p.className = "particle";
+
+    // spawn in upper/mid area (above grass)
+    const x = Math.random() * window.innerWidth;
+    const y = 160 + Math.random() * (window.innerHeight * 0.45);
+
+    const size = 2 + Math.random() * 3;
+    const drift = (Math.random() - 0.5) * 0.05; // px/ms sideways
+    const rise = 0.03 + Math.random() * 0.07;   // px/ms upward
+    const life = 4500 + Math.random() * 3500;   // ms
+
+    p.style.width = size + "px";
+    p.style.height = size + "px";
+    p.style.left = x + "px";
+    p.style.top = y + "px";
+    p.style.opacity = (0.35 + Math.random() * 0.45).toFixed(2);
+
+    particlesLayer.appendChild(p);
+
+    return {
+      el: p,
+      x, y,
+      drift,
+      rise,
+      life,
+      born: performance.now(),
+    };
+  }
+
+  function ensureParticles() {
+    while (particles.length < MAX_PARTICLES) particles.push(spawnParticle());
+  }
+
+  ensureParticles();
+
+  // ---------- Animation loop ----------
+  let last = performance.now();
+  function tick(now) {
+    const dt = now - last;
+    last = now;
+
+    // Birds move right and gently bob
+    for (const b of birds) {
+      b.x += b.speed * dt;
+      b.phase += dt * 0.004;
+
+      const yBob = Math.sin(b.phase) * (b.bob * 0.08); // subtle bob
+      b.el.style.transform = `translate(${b.x}px, ${yBob}px)`;
+
+      if (b.x > window.innerWidth + 200) {
+        // recycle to left
+        b.x = -260 - Math.random() * 300;
+        b.y = 20 + Math.random() * 120;
+        b.el.style.top = b.y + "px";
+        b.speed = 0.25 + Math.random() * 0.45;
+        b.bob = 8 + Math.random() * 10;
+      }
+    }
+
+    // Particles drift up & fade out near end of life
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.drift * dt;
+      p.y -= p.rise * dt;
+
+      const age = now - p.born;
+      const t = Math.min(1, age / p.life);
+      const fade = (1 - t);
+
+      p.el.style.left = p.x + "px";
+      p.el.style.top = p.y + "px";
+      p.el.style.opacity = String(0.65 * fade);
+
+      // recycle
+      if (t >= 1 || p.y < 120) {
+        p.el.remove();
+        particles.splice(i, 1);
+      }
+    }
+
+    ensureParticles();
+    requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+});
