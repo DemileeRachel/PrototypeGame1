@@ -316,3 +316,46 @@ body::before{
   0%,100%{ transform: translateY(0); }
   50%{ transform: translateY(10px); }
 }
+/* ===============================
+   DISTANT HORIZON (HILLS + MIST)
+================================ */
+.horizon{
+  position: fixed;
+  left: 0;
+  width: 100%;
+  top: 170px;                 /* sits below clouds */
+  height: 260px;              /* fills the “empty” mid area */
+  z-index: 1;                 /* behind panel (z=5), above sky (z=2 is ok too) */
+  pointer-events: none;
+
+  /* 3 layers: mist + hills + extra mist */
+  background:
+    /* mist fade into the main sky */
+    linear-gradient(to bottom,
+      rgba(255,255,255,0.10) 0%,
+      rgba(255,255,255,0.06) 40%,
+      rgba(255,255,255,0.00) 100%
+    ),
+
+    /* hills silhouette blobs */
+    radial-gradient(circle at 10% 100%, rgba(20,130,20,0.22) 0 45%, rgba(0,0,0,0) 46%),
+    radial-gradient(circle at 32% 110%, rgba(20,130,20,0.18) 0 52%, rgba(0,0,0,0) 53%),
+    radial-gradient(circle at 55% 100%, rgba(20,130,20,0.20) 0 50%, rgba(0,0,0,0) 51%),
+    radial-gradient(circle at 78% 115%, rgba(20,130,20,0.16) 0 56%, rgba(0,0,0,0) 57%),
+    radial-gradient(circle at 95% 100%, rgba(20,130,20,0.20) 0 46%, rgba(0,0,0,0) 47%),
+
+    /* subtle haze band */
+    linear-gradient(to bottom,
+      rgba(0,0,0,0.00) 0%,
+      rgba(0,0,0,0.06) 55%,
+      rgba(0,0,0,0.00) 100%
+    );
+
+  filter: blur(0.2px);
+  animation: horizonDrift 9s ease-in-out infinite;
+}
+
+@keyframes horizonDrift{
+  0%,100%{ transform: translateY(0); opacity: 0.95; }
+  50%{ transform: translateY(6px); opacity: 1; }
+}
