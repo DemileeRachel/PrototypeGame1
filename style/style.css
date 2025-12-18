@@ -1,12 +1,24 @@
 /* ===============================
    GLOBAL
 ================================ */
+html, body{
+  height: 100%;
+}
+
 body{
   margin: 0;
   padding: 0;
   min-height: 100vh;
   font-family: "Press Start 2P", monospace;
-  background: transparent; /* IMPORTANT */
+  background:
+    linear-gradient(
+      to bottom,
+      #3aaeff 0%,
+      #6ac6ff 25%,
+      #7ed6ff 55%,
+      #9be3ff 75%,
+      #bfefff 100%
+    );
   color: #ffffff;
   text-align: center;
   overflow-x: hidden;
@@ -17,66 +29,34 @@ img{
 }
 
 /* ===============================
-   SKY (DEPTH + ANIMATION)
+   SKY
 ================================ */
 .sky{
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 180px;
+  height: 160px;
   z-index: 0;
   overflow: hidden;
 
   background:
-    radial-gradient(circle at 70% 30%, rgba(255,255,255,0.45), rgba(255,255,255,0) 45%),
-    linear-gradient(to bottom, #4fb8ff 0%, #6ac6ff 45%, #78d2ff 100%);
+    linear-gradient(to bottom, #1e9bff 0%, #6ac6ff 100%);
 
   animation: skyBreath 8s ease-in-out infinite;
 }
 
-/* vignette + subtle noise */
-.sky::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background:
-    radial-gradient(circle at 50% 20%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.12) 70%),
-    repeating-linear-gradient(
-      0deg,
-      rgba(255,255,255,0.03),
-      rgba(255,255,255,0.03) 1px,
-      rgba(0,0,0,0.02) 1px,
-      rgba(0,0,0,0.02) 2px
-    );
-  mix-blend-mode: soft-light;
-  opacity: 0.65;
-}
-
-/* sun glow */
-.sky::after{
-  content:"";
-  position:absolute;
-  width: 240px;
-  height: 240px;
-  right: -40px;
-  top: -60px;
-  background: radial-gradient(circle, rgba(255,255,255,0.55), rgba(255,255,255,0) 70%);
-  filter: blur(2px);
-  opacity: 0.85;
-}
-
 @keyframes skyBreath{
-  0%,100%{ filter: saturate(1) brightness(1); }
-  50%{ filter: saturate(1.05) brightness(1.02); }
+  0%,100%{ filter: brightness(1); }
+  50%{ filter: brightness(1.05); }
 }
 
 /* ===============================
-   CLOUDS (PARALLAX)
+   CLOUDS
 ================================ */
 .cloud-layer{
   position: absolute;
+  top: 0;
   left: 0;
   width: 200%;
   height: 140px;
@@ -85,28 +65,28 @@ img{
   will-change: transform;
 }
 
+/* far clouds */
 .cloud-far{
-  top: 12px;
-  opacity: 0.55;
+  opacity: 0.6;
   background-image:
     url("../assets/images/cloudvar1.png"),
     url("../assets/images/cloudvar2.png");
   background-size: 140px auto;
-  background-position: 0px 28px, 180px 18px;
-  animation: cloudFar 85s linear infinite;
+  background-position: 0 30px, 200px 15px;
+  animation: cloudFar 90s linear infinite;
 }
 
+/* near clouds */
 .cloud-near{
-  top: 0;
-  opacity: 0.9;
+  opacity: 0.95;
   background-image:
     url("../assets/images/cloudvar1.png"),
     url("../assets/images/cloudvar2.png"),
     url("../assets/images/cloudvar1.png"),
     url("../assets/images/cloudvar2.png");
   background-size: 220px auto;
-  background-position: 0px 10px, 220px 35px, 440px 20px, 660px 45px;
-  animation: cloudNear 48s linear infinite;
+  background-position: 0 10px, 220px 35px, 440px 20px, 660px 45px;
+  animation: cloudNear 50s linear infinite;
 }
 
 @keyframes cloudFar{
@@ -120,11 +100,48 @@ img{
 }
 
 /* ===============================
-   CONTENT LAYERING
+   DISTANT HORIZON (FIXED)
 ================================ */
-header, .panel, footer, .slime, .grass{
+.horizon{
+  position: fixed;
+  left: 0;
+  top: 140px;              /* BELOW clouds */
+  width: 100%;
+  height: 420px;           /* BIG so it cannot collapse */
+  z-index: 1;
+  pointer-events: none;
+
+  background:
+    /* mist */
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.20) 0%,
+      rgba(255,255,255,0.12) 30%,
+      rgba(255,255,255,0.05) 60%,
+      rgba(255,255,255,0.00) 100%
+    ),
+
+    /* hills */
+    radial-gradient(circle at 10% 100%, rgba(30,130,30,0.28) 0 46%, transparent 47%),
+    radial-gradient(circle at 30% 110%, rgba(30,130,30,0.22) 0 52%, transparent 53%),
+    radial-gradient(circle at 55% 100%, rgba(30,130,30,0.25) 0 50%, transparent 51%),
+    radial-gradient(circle at 75% 115%, rgba(30,130,30,0.20) 0 56%, transparent 57%),
+    radial-gradient(circle at 95% 100%, rgba(30,130,30,0.26) 0 48%, transparent 49%);
+
+  animation: horizonFloat 10s ease-in-out infinite;
+}
+
+@keyframes horizonFloat{
+  0%,100%{ transform: translateY(0); }
+  50%{ transform: translateY(8px); }
+}
+
+/* ===============================
+   CONTENT STACKING
+================================ */
+header, .panel, .slime, .grass, footer{
   position: relative;
-  z-index: 2;
+  z-index: 5;
 }
 
 /* ===============================
@@ -183,7 +200,6 @@ header p{ font-size: 12px; margin-top: 10px; }
   top: 38%;
   transform: translate(-50%, -50%);
   font-size: 96px;
-  line-height: 1;
   opacity: 0.95;
   pointer-events: none;
   z-index: 2;
@@ -215,8 +231,8 @@ header p{ font-size: 12px; margin-top: 10px; }
   cursor: pointer;
   box-shadow: 0 0 6px #6d45ff;
   transition: transform 0.2s ease, background 0.2s ease;
-  z-index: 3;
   position: relative;
+  z-index: 3;
 }
 
 .pixel-btn:hover{
@@ -242,16 +258,6 @@ header p{ font-size: 12px; margin-top: 10px; }
   50%{ transform: translate(-50%, -40px); }
 }
 
-.slime-wiggle{ animation: wiggle 0.35s ease; }
-
-@keyframes wiggle{
-  0%{ transform: translateY(0) rotate(0); }
-  25%{ transform: translateY(-4px) rotate(-4deg); }
-  50%{ transform: translateY(0) rotate(3deg); }
-  75%{ transform: translateY(-2px) rotate(-3deg); }
-  100%{ transform: translateY(0) rotate(0); }
-}
-
 /* ===============================
    GRASS + FOOTER
 ================================ */
@@ -273,89 +279,4 @@ footer{
   font-size: 10px;
   color: #b9daff;
   z-index: 12;
-}
-html, body {
-  height: 100%;
-}
-
-/* FULL PAGE BACKGROUND (prevents white) */
-body{
-  background:
-    /* subtle top glow */
-    radial-gradient(circle at 70% 10%, rgba(255,255,255,0.18), rgba(255,255,255,0) 35%),
-    /* vertical sky depth all the way down */
-    linear-gradient(to bottom,
-      #3aaeff 0%,
-      #6ac6ff 22%,
-      #7ed6ff 45%,
-      #9be3ff 70%,
-      #bfefff 100%
-    );
-  background-attachment: fixed;
-}
-/* soft moving haze over the full page */
-body::before{
-  content:"";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.08;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      rgba(255,255,255,0.10),
-      rgba(255,255,255,0.10) 1px,
-      rgba(0,0,0,0.06) 1px,
-      rgba(0,0,0,0.06) 3px
-    );
-  animation: hazeDrift 12s ease-in-out infinite;
-}
-
-@keyframes hazeDrift{
-  0%,100%{ transform: translateY(0); }
-  50%{ transform: translateY(10px); }
-}
-/* ===============================
-   DISTANT HORIZON (HILLS + MIST)
-================================ */
-.horizon{
-  position: fixed;
-  left: 0;
-  width: 100%;
-  top: 170px;                 /* sits below clouds */
-  height: 260px;              /* fills the “empty” mid area */
-  z-index: 1;                 /* behind panel (z=5), above sky (z=2 is ok too) */
-  pointer-events: none;
-
-  /* 3 layers: mist + hills + extra mist */
-  background:
-    /* mist fade into the main sky */
-    linear-gradient(to bottom,
-      rgba(255,255,255,0.10) 0%,
-      rgba(255,255,255,0.06) 40%,
-      rgba(255,255,255,0.00) 100%
-    ),
-
-    /* hills silhouette blobs */
-    radial-gradient(circle at 10% 100%, rgba(20,130,20,0.22) 0 45%, rgba(0,0,0,0) 46%),
-    radial-gradient(circle at 32% 110%, rgba(20,130,20,0.18) 0 52%, rgba(0,0,0,0) 53%),
-    radial-gradient(circle at 55% 100%, rgba(20,130,20,0.20) 0 50%, rgba(0,0,0,0) 51%),
-    radial-gradient(circle at 78% 115%, rgba(20,130,20,0.16) 0 56%, rgba(0,0,0,0) 57%),
-    radial-gradient(circle at 95% 100%, rgba(20,130,20,0.20) 0 46%, rgba(0,0,0,0) 47%),
-
-    /* subtle haze band */
-    linear-gradient(to bottom,
-      rgba(0,0,0,0.00) 0%,
-      rgba(0,0,0,0.06) 55%,
-      rgba(0,0,0,0.00) 100%
-    );
-
-  filter: blur(0.2px);
-  animation: horizonDrift 9s ease-in-out infinite;
-}
-
-@keyframes horizonDrift{
-  0%,100%{ transform: translateY(0); opacity: 0.95; }
-  50%{ transform: translateY(6px); opacity: 1; }
 }
