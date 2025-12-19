@@ -6,42 +6,66 @@
   <title>Memory Match</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <!-- Shared theme -->
   <link rel="stylesheet" href="./style/theme.css?v=1">
-  <link rel="stylesheet" href="style/memory.css">
+
+  <!-- Memory-specific -->
+  <link rel="stylesheet" href="./style/memory.css?v=1">
 </head>
 
-<body>
-  <header>
-    <h1>🧠 Memory Match</h1>
-    <p><a class="back-link" href="index.html">⬅ Back to Hub</a></p>
-  </header>
+<body class="hub">
+  <div class="scene">
 
-  <section class="panel">
-    <div class="memory-wrap">
+    <!-- Clouds band -->
+    <div class="clouds" aria-hidden="true"></div>
 
-      <div class="hud">
-        <div class="hud-item">Moves: <span id="moves">0</span></div>
-        <div class="hud-item">Matches: <span id="matches">0</span>/<span id="totalPairs">6</span></div>
-        <div class="hud-item">Time: <span id="time">0</span>s</div>
-        <button id="restartBtn" class="pixel-btn">Restart</button>
-      </div>
+    <!-- Title under clouds -->
+    <header class="hud">
+      <h1 class="title">🧠 Memory Match</h1>
+      <p class="subtitle">
+        <a class="pixel-btn" href="index.html" data-tooltip="Back to hub">⬅ Back</a>
+      </p>
+    </header>
 
-      <div id="board" class="board" aria-label="Memory board"></div>
+    <!-- Main content in the same green frame -->
+    <main class="content">
+      <section class="hub-panel">
+        <div class="memory-wrap">
 
-      <div id="win" class="win hidden">
-        <div class="win-box">
-          <div class="win-title">✨ You Win! ✨</div>
-          <div class="win-stats">
-            Moves: <span id="winMoves">0</span> • Time: <span id="winTime">0</span>s
+          <!-- In-game HUD (renamed to avoid theme .hud conflict) -->
+          <div class="memory-hud">
+            <div class="hud-item">Moves: <span id="moves">0</span></div>
+            <div class="hud-item">Matches: <span id="matches">0</span>/<span id="totalPairs">6</span></div>
+            <div class="hud-item">Time: <span id="time">0</span>s</div>
+            <button id="restartBtn" class="pixel-btn">Restart</button>
           </div>
-          <button class="pixel-btn" id="playAgainBtn">Play Again</button>
+
+          <div id="board" class="board" aria-label="Memory board"></div>
+
+          <div id="win" class="win hidden">
+            <div class="win-box">
+              <div class="win-title">✨ You Win! ✨</div>
+              <div class="win-stats">
+                Moves: <span id="winMoves">0</span> • Time: <span id="winTime">0</span>s
+              </div>
+              <button class="pixel-btn" id="playAgainBtn">Play Again</button>
+            </div>
+          </div>
+
         </div>
-      </div>
+      </section>
+    </main>
 
-    </div>
-  </section>
+    <!-- Grass -->
+    <div class="ground" aria-hidden="true"></div>
 
-  <!-- SFX (reuse your sounds; add match/win if you want later) -->
+    <footer class="footer">
+      🌸 © 2025 Mini Game Hub
+    </footer>
+  </div>
+
+  <!-- SFX -->
   <audio id="sfx-click" src="assets/sounds/click.wav" preload="auto"></audio>
   <audio id="sfx-select" src="assets/sounds/select.wav" preload="auto"></audio>
 
