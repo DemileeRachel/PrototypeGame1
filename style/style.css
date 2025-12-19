@@ -268,15 +268,37 @@ body{
 .mrslime{
   position: absolute;
   left: 50%;
-  bottom: calc(var(--ground-h) + 6px);
+  bottom: calc(var(--ground-h) - 12px);
   transform: translateX(-50%);
   width: 110px;
   height: auto;
-
+  z-index: 6;
   image-rendering: pixelated;
   pointer-events: none;
-
+}
+.sprite-slime-float{
+  position: absolute;
+  left: 50%;
+  top: 360px;
+  transform: translateX(-50%);
+  width: 120px;
+  height: auto;
   z-index: 6;
+  image-rendering: pixelated;
+  pointer-events: none;
+  animation: floatSprite 2.4s ease-in-out infinite;
+}
+
+@keyframes floatSprite{
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-10px); }
+}
+
+.emoji-icon{
+  font-size: 42px;
+  line-height: 1;
+  image-rendering: pixelated;
+  user-select: none;
 }
 
 /* === Grass ground strip === */
