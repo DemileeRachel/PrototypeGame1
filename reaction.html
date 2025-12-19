@@ -7,38 +7,58 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style/theme.css?v=1">
-  <link rel="stylesheet" href="style/reaction.css">
+  <link rel="stylesheet" href="./style/reaction.css?v=1">
 </head>
 
-<body>
-  <header>
-    <h1>⚡ Reaction Test</h1>
-    <p><a class="back-link" href="index.html">⬅ Back to Hub</a></p>
-  </header>
+<body class="hub">
+  <div class="scene">
 
-  <section class="panel">
-    <div class="reaction-wrap">
+    <!-- Clouds band -->
+    <div class="clouds" aria-hidden="true"></div>
 
-      <div class="hud">
-        <div class="hud-item">Best: <span id="best">—</span> ms</div>
-        <div class="hud-item">Last: <span id="last">—</span> ms</div>
-        <div class="hud-item">Attempts: <span id="tries">0</span></div>
-        <button id="resetBtn" class="pixel-btn">Reset</button>
-      </div>
+    <!-- Title under clouds -->
+    <header class="hud">
+      <h1 class="title">⚡ Reaction Test</h1>
+      <p class="subtitle">
+        <a class="pixel-btn" href="index.html" data-tooltip="Back to hub">⬅ Back</a>
+      </p>
+    </header>
 
-      <button id="box" class="box waiting" type="button" aria-label="Reaction box">
-        <div class="box-text" id="boxText">CLICK TO START</div>
-        <div class="box-sub" id="boxSub">Wait for GREEN, then click fast.</div>
-      </button>
+    <!-- Main content in green frame -->
+    <main class="content">
+      <section class="hub-panel">
+        <div class="reaction-wrap">
 
-      <div class="tips">
-        <div>Rules:</div>
-        <div>• Click to start → wait for green → click when green</div>
-        <div>• Clicking early = false start</div>
-      </div>
+          <!-- ✅ Renamed from .hud to avoid theme clash -->
+          <div class="reaction-hud">
+            <div class="hud-item">Best: <span id="best">—</span> ms</div>
+            <div class="hud-item">Last: <span id="last">—</span> ms</div>
+            <div class="hud-item">Attempts: <span id="tries">0</span></div>
+            <button id="resetBtn" class="pixel-btn">Reset</button>
+          </div>
 
-    </div>
-  </section>
+          <button id="box" class="box waiting" type="button" aria-label="Reaction box">
+            <div class="box-text" id="boxText">CLICK TO START</div>
+            <div class="box-sub" id="boxSub">Wait for GREEN, then click fast.</div>
+          </button>
+
+          <div class="tips">
+            <div>Rules:</div>
+            <div>• Click to start → wait for green → click when green</div>
+            <div>• Clicking early = false start</div>
+          </div>
+
+        </div>
+      </section>
+    </main>
+
+    <!-- Grass -->
+    <div class="ground" aria-hidden="true"></div>
+
+    <footer class="footer">
+      🌸 © 2025 Mini Game Hub
+    </footer>
+  </div>
 
   <!-- SFX -->
   <audio id="sfx-click" src="assets/sounds/click.wav" preload="auto"></audio>
