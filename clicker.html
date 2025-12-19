@@ -6,94 +6,116 @@
   <title>Clicker Game</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <!-- Shared theme (sky/clouds/green UI/grass/buttons) -->
   <link rel="stylesheet" href="./style/theme.css?v=1">
-  <link rel="stylesheet" href="style/clicker.css">
+
+  <!-- Clicker-specific styling -->
+  <link rel="stylesheet" href="./style/clicker.css?v=1">
 </head>
 
-<body>
+<body class="hub">
+  <div class="scene">
 
-  <!-- Back -->
-  <header>
-    <h1>🟦 Clicker Game</h1>
-    <p><a class="back-link" href="index.html">⬅ Back to Hub</a></p>
-  </header>
+    <!-- Clouds band -->
+    <div class="clouds" aria-hidden="true"></div>
 
-  <section class="panel">
-    <div class="clicker-wrap">
+    <!-- Title under clouds -->
+    <header class="hud">
+      <h1 class="title">🟦 Clicker Game</h1>
+      <p class="subtitle">
+        <a class="pixel-btn" href="index.html" data-tooltip="Back to hub">⬅ Back</a>
+      </p>
+    </header>
 
-      <!-- Left: Stats + Click -->
-      <div class="clicker-card">
-        <h2 class="clicker-title">💰 Coins</h2>
-        <div class="stat">
-          <div>Coins</div>
-          <div id="coins">0</div>
-        </div>
-        <div class="stat">
-          <div>Per Click</div>
-          <div id="perClick">1</div>
-        </div>
-        <div class="stat">
-          <div>Auto / sec</div>
-          <div id="perSec">0</div>
-        </div>
+    <!-- Main content in the same green frame -->
+    <main class="content">
+      <section class="hub-panel">
+        <div class="clicker-wrap">
 
-        <button id="clickBtn" class="pixel-btn big-btn">CLICK!</button>
+          <!-- Left: Stats + Click -->
+          <div class="clicker-card">
+            <h2 class="clicker-title">💰 Coins</h2>
 
-        <div class="tiny">
-          Autosave is on. Your progress is stored in your browser.
-        </div>
+            <div class="stat">
+              <div>Coins</div>
+              <div id="coins">0</div>
+            </div>
+            <div class="stat">
+              <div>Per Click</div>
+              <div id="perClick">1</div>
+            </div>
+            <div class="stat">
+              <div>Auto / sec</div>
+              <div id="perSec">0</div>
+            </div>
 
-        <div class="row">
-          <button id="resetBtn" class="pixel-btn danger">Reset Save</button>
-        </div>
-      </div>
+            <button id="clickBtn" class="pixel-btn big-btn">CLICK!</button>
 
-      <!-- Right: Shop -->
-      <div class="clicker-card">
-        <h2 class="clicker-title">🛒 Shop</h2>
+            <div class="tiny">
+              Autosave is on. Your progress is stored in your browser.
+            </div>
 
-        <div class="shop-item">
-          <div class="shop-left">
-            <div class="shop-name">+1 Per Click</div>
-            <div class="shop-desc">Increase coins gained per click</div>
+            <div class="row">
+              <button id="resetBtn" class="pixel-btn danger">Reset Save</button>
+            </div>
           </div>
-          <div class="shop-right">
-            <div class="price" id="pcCost">10</div>
-            <button id="buyPerClick" class="pixel-btn">Buy</button>
+
+          <!-- Right: Shop -->
+          <div class="clicker-card">
+            <h2 class="clicker-title">🛒 Shop</h2>
+
+            <div class="shop-item">
+              <div class="shop-left">
+                <div class="shop-name">+1 Per Click</div>
+                <div class="shop-desc">Increase coins gained per click</div>
+              </div>
+              <div class="shop-right">
+                <div class="price" id="pcCost">10</div>
+                <button id="buyPerClick" class="pixel-btn">Buy</button>
+              </div>
+            </div>
+
+            <div class="shop-item">
+              <div class="shop-left">
+                <div class="shop-name">Auto Clicker</div>
+                <div class="shop-desc">Earn coins automatically each second</div>
+              </div>
+              <div class="shop-right">
+                <div class="price" id="autoCost">25</div>
+                <button id="buyAuto" class="pixel-btn">Buy</button>
+              </div>
+            </div>
+
+            <div class="shop-item">
+              <div class="shop-left">
+                <div class="shop-name">Multiplier</div>
+                <div class="shop-desc">Boosts click + auto gains</div>
+              </div>
+              <div class="shop-right">
+                <div class="price" id="multCost">100</div>
+                <button id="buyMult" class="pixel-btn">Buy</button>
+              </div>
+            </div>
+
+            <div class="tiny">
+              Tip: costs scale each purchase (classic clicker feel).
+            </div>
           </div>
+
         </div>
+      </section>
+    </main>
 
-        <div class="shop-item">
-          <div class="shop-left">
-            <div class="shop-name">Auto Clicker</div>
-            <div class="shop-desc">Earn coins automatically each second</div>
-          </div>
-          <div class="shop-right">
-            <div class="price" id="autoCost">25</div>
-            <button id="buyAuto" class="pixel-btn">Buy</button>
-          </div>
-        </div>
+    <!-- Grass -->
+    <div class="ground" aria-hidden="true"></div>
 
-        <div class="shop-item">
-          <div class="shop-left">
-            <div class="shop-name">Multiplier</div>
-            <div class="shop-desc">Boosts click + auto gains</div>
-          </div>
-          <div class="shop-right">
-            <div class="price" id="multCost">100</div>
-            <button id="buyMult" class="pixel-btn">Buy</button>
-          </div>
-        </div>
+    <footer class="footer">
+      🌸 © 2025 Mini Game Hub
+    </footer>
+  </div>
 
-        <div class="tiny">
-          Tip: costs scale each purchase (classic clicker feel).
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Sound Effects (reuse yours) -->
+  <!-- Sound Effects -->
   <audio id="sfx-click" src="assets/sounds/click.wav" preload="auto"></audio>
   <audio id="sfx-select" src="assets/sounds/select.wav" preload="auto"></audio>
 
