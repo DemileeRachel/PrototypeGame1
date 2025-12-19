@@ -1,0 +1,298 @@
+/* ==============================
+   Rogue-ish Mini Hub Theme (Shared)
+   Use on: index + clicker + memory + reaction + snake
+   Path: /style/theme.css
+============================== */
+
+:root{
+  --font: "Press Start 2P", system-ui, sans-serif;
+
+  --sky-top: #1aa1ff;
+  --sky-mid: #76ccff;
+  --sky-bot: #c8f3ff;
+
+  --panel: #1a8b1a;
+  --panel-dark: #0f5f0f;
+  --panel-deep: #0b3f0b;
+
+  --tile-mid: #39a739;
+  --tile-dark: #0c3b0c;
+
+  --btn: #4c45c9;
+  --btn-dark: #2b278d;
+
+  --cloud-h: 240px;
+  --ground-h: 96px;
+}
+
+*{ box-sizing:border-box; }
+html, body{ height:100%; margin:0; padding:0; }
+
+body{
+  font-family: var(--font);
+  overflow-x:hidden;
+  background: linear-gradient(var(--sky-top), var(--sky-mid), var(--sky-bot));
+}
+
+/* === Scene === */
+.scene{
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  padding-bottom: calc(var(--ground-h) + 70px);
+}
+
+/* === Clouds band === */
+.clouds{
+  position:absolute;
+  top:0; left:0;
+  width:100%;
+  height: var(--cloud-h);
+  z-index: 1;
+  background-image: url("../assets/images/clouds.png");
+  background-repeat: repeat-x;
+  background-position: top center;
+  background-size: auto 100%;
+}
+
+/* === HUD title === */
+.hud{
+  position: relative;
+  z-index: 3;
+  text-align:center;
+  padding-top: calc(var(--cloud-h) - 85px);
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.title{
+  margin: 0;
+  font-size: 26px;
+  color:#fff;
+  text-shadow: 0 4px 0 rgba(0,0,0,0.25);
+}
+
+.subtitle{
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: rgba(255,255,255,0.9);
+  text-shadow: 0 3px 0 rgba(0,0,0,0.18);
+}
+
+.counter{
+  margin: 10px 0 0;
+  font-size: 10px;
+  color: rgba(255,255,255,0.85);
+  text-shadow: 0 3px 0 rgba(0,0,0,0.18);
+}
+
+/* === Content wrapper === */
+.content{
+  position: relative;
+  z-index: 3;
+  display:flex;
+  justify-content:center;
+  padding: 30px 14px 0;
+}
+
+.hub-panel{
+  width: min(980px, 92vw);
+  padding: 22px 20px 18px;
+
+  background: linear-gradient(#1f981f, var(--panel));
+  border: 6px solid var(--panel-dark);
+
+  box-shadow:
+    0 0 0 4px var(--panel-deep),
+    0 10px 0 rgba(0,0,0,0.25);
+
+  border-radius: 10px;
+}
+
+/* === Hub grid/cards === */
+.game-grid{
+  display:grid;
+  grid-template-columns: repeat(4, minmax(170px, 1fr));
+  gap: 18px;
+}
+
+.game-card{
+  background: linear-gradient(#1c7f1c, #0f5f0f);
+  border: 4px solid var(--tile-dark);
+  border-radius: 8px;
+  padding: 12px;
+
+  box-shadow:
+    0 0 0 3px var(--tile-mid),
+    0 0 0 6px rgba(0,0,0,0.22);
+}
+
+.card-inner{
+  display:grid;
+  justify-items:center;
+  text-align:center;
+  gap: 10px;
+}
+
+.icon-frame{
+  width: 132px;
+  height: 132px;
+  border-radius: 10px;
+
+  background: linear-gradient(#0f6a0f, #0b4b0b);
+  border: 4px solid var(--tile-mid);
+
+  box-shadow:
+    inset 0 0 0 4px rgba(0,0,0,0.22),
+    0 7px 0 rgba(0,0,0,0.22);
+
+  display:grid;
+  place-items:center;
+}
+
+/* Emoji icon instead of image */
+.emoji-icon{
+  font-size: 54px;
+  line-height: 1;
+  filter: drop-shadow(0 4px 0 rgba(0,0,0,0.25));
+}
+
+.card-title{
+  margin: 0;
+  font-size: 11px;
+  color: #eaffea;
+  text-shadow: 0 3px 0 rgba(0,0,0,0.25);
+}
+
+/* === Pixel button === */
+.pixel-btn{
+  position: relative;
+  display:inline-block;
+  padding: 9px 16px;
+
+  background: linear-gradient(var(--btn), #3e38b8);
+  border: 4px solid var(--btn-dark);
+  border-radius: 8px;
+
+  color:#fff;
+  text-decoration:none;
+  font-size: 10px;
+  line-height: 1;
+
+  box-shadow:
+    0 6px 0 rgba(0,0,0,0.25),
+    inset 0 0 0 3px rgba(255,255,255,0.08);
+
+  transform: translateY(0);
+  transition: transform 120ms ease;
+}
+
+.pixel-btn:hover{ transform: translateY(-1px); }
+.pixel-btn:active{
+  transform: translateY(2px);
+  box-shadow:
+    0 3px 0 rgba(0,0,0,0.25),
+    inset 0 0 0 3px rgba(255,255,255,0.08);
+}
+
+/* Tooltip */
+.pixel-btn[data-tooltip]::after{
+  content: attr(data-tooltip);
+  position:absolute;
+  left:50%;
+  bottom: calc(100% + 10px);
+  transform: translateX(-50%);
+  white-space:nowrap;
+
+  background: rgba(0,0,0,0.85);
+  color:#fff;
+  padding: 8px 10px;
+  border: 2px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+
+  font-size: 9px;
+  opacity:0;
+  pointer-events:none;
+  transition: opacity 140ms ease;
+}
+.pixel-btn[data-tooltip]::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom: calc(100% + 2px);
+  transform: translateX(-50%);
+  border: 7px solid transparent;
+  border-top-color: rgba(0,0,0,0.85);
+  opacity:0;
+  transition: opacity 140ms ease;
+}
+.pixel-btn:hover::after,
+.pixel-btn:hover::before{ opacity:1; }
+
+/* === Floating SpriteSlime === */
+.sprite-slime-float{
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--ground-h) + 170px);
+  transform: translateX(-50%);
+  width: 120px;
+  height: auto;
+  image-rendering: pixelated;
+  pointer-events: none;
+  z-index: 4;
+  animation: floatSprite 2.4s ease-in-out infinite;
+}
+@keyframes floatSprite{
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50%     { transform: translateX(-50%) translateY(-10px); }
+}
+
+/* === Ground mrslime === */
+.mrslime{
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--ground-h) + 6px);
+  transform: translateX(-50%);
+  width: 110px;
+  height: auto;
+  image-rendering: pixelated;
+  pointer-events: none;
+  z-index: 6;
+}
+
+/* === Grass === */
+.ground{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: var(--ground-h);
+  z-index: 5;
+
+  background-image: url("../assets/images/grass.png");
+  background-repeat: repeat-x;
+  background-position: bottom center;
+  background-size: auto 100%;
+  image-rendering: pixelated;
+}
+
+.footer{
+  position: absolute;
+  left: 0;
+  bottom: calc(var(--ground-h) + 12px);
+  width: 100%;
+  text-align: center;
+  z-index: 7;
+  font-size: 9px;
+  color: rgba(0,0,0,0.35);
+}
+
+/* Responsive */
+@media (max-width: 980px){
+  .game-grid{ grid-template-columns: repeat(2, minmax(170px, 1fr)); }
+}
+@media (max-width: 520px){
+  :root{ --cloud-h: 200px; --ground-h: 88px; }
+  .game-grid{ grid-template-columns: 1fr; }
+  .title{ font-size: 20px; }
+}
