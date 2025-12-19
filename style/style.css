@@ -1,10 +1,14 @@
 /* =========================================
    MINI GAME HUB - RESTORE (Green boxes + grass)
+   + Floating SpriteSlime in blue area
+   + mrslime on the ground
+
    Works with: index.html + style.css in same folder
    Assets expected:
    - assets/images/clouds.png
    - assets/images/grass.png
    - assets/images/SpriteSlime.png
+   - assets/images/mrslime.png
    - assets/icons/*.png
 ========================================= */
 
@@ -61,7 +65,7 @@ body{
   background-size: auto 100%;
 }
 
-/* === Title under clouds (like your old layout) === */
+/* === Title under clouds === */
 .hud{
   position: relative;
   z-index: 3;
@@ -103,8 +107,8 @@ body{
 
 .hub-panel{
   width: min(980px, 92vw);
-
   padding: 22px 20px 18px;
+
   background: linear-gradient(#1f981f, var(--panel));
   border: 6px solid var(--panel-dark);
 
@@ -115,7 +119,7 @@ body{
   border-radius: 10px;
 }
 
-/* === Green game boxes (your old vibe) === */
+/* === Green game boxes === */
 .game-grid{
   display:grid;
   grid-template-columns: repeat(4, minmax(170px, 1fr));
@@ -233,48 +237,49 @@ body{
 }
 .pixel-btn:hover::after,
 .pixel-btn:hover::before{ opacity:1; }
-/* NEW: floating SpriteSlime in the sky above the green panel */
+
+/* =========================================================
+   FLOATING SpriteSlime (in the blue area, above the grass)
+========================================================= */
 .sprite-slime-float{
   position: absolute;
   left: 50%;
-  top: 360px;                 /* move up/down to taste */
+  bottom: calc(var(--ground-h) + 140px); /* ✅ always above grass */
   transform: translateX(-50%);
-  width: 120px;               /* size */
+  width: 120px;
   height: auto;
 
   image-rendering: pixelated;
   pointer-events: none;
 
-  /* Layering */
-  z-index: 6;
-
+  z-index: 4;
   animation: floatSprite 2.4s ease-in-out infinite;
 }
 
 @keyframes floatSprite{
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50%      { transform: translateX(-50%) translateY(-10px); }
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50%     { transform: translateX(-50%) translateY(-10px); }
 }
 
-/* === Slime sits above grass, center === */
-.slime{
+/* =========================================================
+   mrslime (ground slime) — back where he was
+   Sits just above the grass strip, centered.
+========================================================= */
+.mrslime{
   position: absolute;
   left: 50%;
+  bottom: calc(var(--ground-h) + 6px);
   transform: translateX(-50%);
-  bottom: calc(var(--ground-h) + 18px);
   width: 110px;
   height: auto;
-  z-index: 4;
+
   image-rendering: pixelated;
-  animation: floaty 2.2s ease-in-out infinite;
+  pointer-events: none;
+
+  z-index: 6;
 }
 
-@keyframes floaty{
-  0%,100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(-8px); }
-}
-
-/* === Grass ground strip (back!) === */
+/* === Grass ground strip === */
 .ground{
   position: absolute;
   left: 0;
@@ -298,7 +303,7 @@ body{
   bottom: calc(var(--ground-h) + 12px);
   width: 100%;
   text-align: center;
-  z-index: 6;
+  z-index: 7;
 
   font-size: 9px;
   color: rgba(0,0,0,0.35);
@@ -315,4 +320,7 @@ body{
   .icon-frame{ width: 150px; height: 150px; }
   .card-icon{ width: 88px; height: 88px; }
   .title{ font-size: 20px; }
+
+  .sprite-slime-float{ width: 110px; bottom: calc(var(--ground-h) + 130px); }
+  .mrslime{ width: 105px; }
 }
