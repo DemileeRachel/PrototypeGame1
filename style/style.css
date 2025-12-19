@@ -233,6 +233,28 @@ body{
 }
 .pixel-btn:hover::after,
 .pixel-btn:hover::before{ opacity:1; }
+/* NEW: floating SpriteSlime in the sky above the green panel */
+.sprite-slime-float{
+  position: absolute;
+  left: 50%;
+  top: 360px;                 /* move up/down to taste */
+  transform: translateX(-50%);
+  width: 120px;               /* size */
+  height: auto;
+
+  image-rendering: pixelated;
+  pointer-events: none;
+
+  /* Layering */
+  z-index: 6;
+
+  animation: floatSprite 2.4s ease-in-out infinite;
+}
+
+@keyframes floatSprite{
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(-10px); }
+}
 
 /* === Slime sits above grass, center === */
 .slime{
