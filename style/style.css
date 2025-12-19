@@ -63,8 +63,8 @@ body{
   height: var(--cloud-band-h);
   z-index: 1;
 
-  /* Replace with your clouds image */
-  background-image: url("../assets/images/clouds.png");
+  /* ✅ FIXED PATH (CSS is in root) */
+  background-image: url("assets/images/clouds.png");
   background-repeat: repeat-x;
   background-position: top center;
   background-size: auto 100%;
@@ -299,8 +299,8 @@ body{
   height: var(--ground-h);
   z-index: 3;
 
-  /* Replace with your grass strip */
-  background-image: url("../assets/images/grass.png");
+  /* ✅ FIXED PATH (CSS is in root) */
+  background-image: url("assets/images/grass.png");
   background-repeat: repeat-x;
   background-position: bottom center;
   background-size: auto 100%;
