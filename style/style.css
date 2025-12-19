@@ -205,6 +205,17 @@ body{
   background-size: auto 100%;
   image-rendering: pixelated;
 }
+.sprite-slime-float{
+  position: absolute;
+  left: 50%;
+  top: 360px;
+  transform: translateX(-50%);
+  width: 120px;
+  height: auto;
+  image-rendering: pixelated;
+  pointer-events: none;
+  z-index: 9999;
+}
 
 /* === Footer === */
 .footer{
@@ -224,4 +235,18 @@ body{
 @media (max-width: 520px){
   :root{ --cloud-h: 200px; --ground-h: 88px; }
   .game-grid{ grid-template-columns: 1fr; }
+}
+/* FORCE SpriteSlime visible (override any older duplicate rules) */
+.sprite-slime-float{
+  position: absolute !important;
+  left: 50% !important;
+  top: 360px !important;
+  transform: translateX(-50%) !important;
+  width: 120px !important;
+  height: auto !important;
+  z-index: 9999 !important;
+  opacity: 1 !important;
+  display: block !important;
+  pointer-events: none !important;
+  image-rendering: pixelated !important;
 }
