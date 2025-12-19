@@ -6,49 +6,73 @@
   <title>Snake Lite</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <!-- Shared hub theme -->
   <link rel="stylesheet" href="./style/theme.css?v=1">
-  <link rel="stylesheet" href="style/snake.css">
+
+  <!-- Snake-specific styles -->
+  <link rel="stylesheet" href="./style/snake.css?v=1">
 </head>
 
-<body>
-  <header>
-    <h1>🐍 Snake Lite</h1>
-    <p><a class="back-link" href="index.html">⬅ Back to Hub</a></p>
-  </header>
+<body class="hub">
+  <div class="scene">
 
-  <section class="panel">
-    <div class="snake-wrap">
+    <!-- Clouds band -->
+    <div class="clouds" aria-hidden="true"></div>
 
-      <div class="hud">
-        <div class="hud-item">Score: <span id="score">0</span></div>
-        <div class="hud-item">Best: <span id="best">0</span></div>
-        <div class="hud-item">Speed: <span id="speed">1</span>x</div>
-        <button id="restartBtn" class="pixel-btn">Restart</button>
-      </div>
+    <!-- Title under clouds -->
+    <header class="hud">
+      <h1 class="title">🐍 Snake Lite</h1>
+      <p class="subtitle">
+        <a class="pixel-btn" href="index.html" data-tooltip="Back to hub">⬅ Back</a>
+      </p>
+    </header>
 
-      <div class="stage">
-        <canvas id="game" width="420" height="420"></canvas>
+    <!-- Main content -->
+    <main class="content">
+      <section class="hub-panel">
+        <div class="snake-wrap">
 
-        <div id="overlay" class="overlay hidden">
-          <div class="overlay-box">
-            <div id="overlayTitle" class="overlay-title">Game Over</div>
-            <div id="overlayText" class="overlay-text">Press Restart</div>
-            <button id="overlayBtn" class="pixel-btn">Play Again</button>
+          <!-- ✅ Renamed HUD -->
+          <div class="snake-hud">
+            <div class="hud-item">Score: <span id="score">0</span></div>
+            <div class="hud-item">Best: <span id="best">0</span></div>
+            <div class="hud-item">Speed: <span id="speed">1</span>x</div>
+            <button id="restartBtn" class="pixel-btn">Restart</button>
           </div>
+
+          <div class="stage">
+            <canvas id="game" width="420" height="420"></canvas>
+
+            <div id="overlay" class="overlay hidden">
+              <div class="overlay-box">
+                <div id="overlayTitle" class="overlay-title">Game Over</div>
+                <div id="overlayText" class="overlay-text">Press Restart</div>
+                <button id="overlayBtn" class="pixel-btn">Play Again</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="tips">
+            Controls:
+            <div>• Arrow keys / WASD</div>
+            <div>• Space = Pause</div>
+            <div>• On mobile: swipe on the board</div>
+          </div>
+
         </div>
-      </div>
+      </section>
+    </main>
 
-      <div class="tips">
-        Controls:
-        <div>• Arrow keys / WASD</div>
-        <div>• Space = Pause</div>
-        <div>• On mobile: swipe on the board</div>
-      </div>
+    <!-- Grass -->
+    <div class="ground" aria-hidden="true"></div>
 
-    </div>
-  </section>
+    <footer class="footer">
+      🌸 © 2025 Mini Game Hub
+    </footer>
+  </div>
 
-  <!-- SFX (optional) -->
+  <!-- SFX -->
   <audio id="sfx-click" src="assets/sounds/click.wav" preload="auto"></audio>
   <audio id="sfx-select" src="assets/sounds/select.wav" preload="auto"></audio>
 
