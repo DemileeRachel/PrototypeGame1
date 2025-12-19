@@ -1,213 +1,188 @@
-/* ================================
-   ROOT + RESET
-================================ */
+/* =========================================
+   MINI GAME HUB - RESTORE (Green boxes + grass)
+   Works with: index.html + style.css in same folder
+   Assets expected:
+   - assets/images/clouds.png
+   - assets/images/grass.png
+   - assets/images/SpriteSlime.png
+   - assets/icons/*.png
+========================================= */
+
 :root{
   --font: "Press Start 2P", system-ui, sans-serif;
 
-  /* Sky */
-  --sky-top: #20a8ff;
-  --sky-mid: #79cfff;
-  --sky-bottom: #c7f2ff;
+  --sky-top: #1aa1ff;
+  --sky-mid: #76ccff;
+  --sky-bot: #c8f3ff;
 
-  /* Panel */
-  --panel-green: #1a8b1a;
-  --panel-green-dark: #0f5f0f;
-  --panel-green-deeper: #0b3f0b;
+  --panel: #1a8b1a;
+  --panel-dark: #0f5f0f;
+  --panel-deep: #0b3f0b;
 
-  /* Pixel border accents */
-  --border-bright: #7cff52;
-  --border-mid: #3aa83a;
-  --border-dark: #0c3b0c;
+  --tile-bright: #7cff52;
+  --tile-mid: #39a739;
+  --tile-dark: #0c3b0c;
 
-  /* Button */
-  --btn-purple: #4c45c9;
-  --btn-purple-dark: #2b278d;
-  --btn-text: #ffffff;
+  --btn: #4c45c9;
+  --btn-dark: #2b278d;
 
-  /* Layout */
-  --cloud-band-h: 220px;
+  --cloud-h: 240px;
   --ground-h: 96px;
 }
 
-*{ box-sizing: border-box; }
-html, body{
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
+*{box-sizing:border-box}
+html,body{height:100%; margin:0; padding:0}
 
 body{
   font-family: var(--font);
-  overflow-x: hidden;
-  background: linear-gradient(var(--sky-top), var(--sky-mid), var(--sky-bottom));
+  overflow-x:hidden;
+  background: linear-gradient(var(--sky-top), var(--sky-mid), var(--sky-bot));
 }
 
-/* ================================
-   SCENE (the key fix)
-   Everything lives inside this
-================================ */
+/* === Scene wrapper === */
 .scene{
   position: relative;
   min-height: 100vh;
   width: 100%;
+  padding-bottom: calc(var(--ground-h) + 70px);
 }
 
-/* ================================
-   CLOUDS (fills full top)
-================================ */
+/* === Clouds fill the whole top band === */
 .clouds{
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: var(--cloud-band-h);
+  position:absolute;
+  top:0; left:0;
+  width:100%;
+  height: var(--cloud-h);
   z-index: 1;
 
-  /* ✅ FIXED PATH (CSS is in root) */
   background-image: url("assets/images/clouds.png");
   background-repeat: repeat-x;
   background-position: top center;
   background-size: auto 100%;
-
-  /* subtle haze to blend */
-  filter: saturate(1.05);
 }
 
-/* ================================
-   HUD TITLE (under clouds)
-================================ */
+/* === Title under clouds (like your old layout) === */
 .hud{
   position: relative;
-  z-index: 2;
-
-  /* push under cloud band a bit */
-  padding-top: calc(var(--cloud-band-h) - 70px);
-  text-align: center;
+  z-index: 3;
+  text-align:center;
+  padding-top: calc(var(--cloud-h) - 85px);
   padding-left: 12px;
   padding-right: 12px;
 }
 
 .title{
   margin: 0;
-  font-size: clamp(18px, 2.2vw, 28px);
-  letter-spacing: 1px;
-  color: #ffffff;
+  font-size: 26px;
+  color:#fff;
   text-shadow: 0 4px 0 rgba(0,0,0,0.25);
 }
 
 .subtitle{
-  margin: 10px 0 6px;
-  font-size: clamp(10px, 1.2vw, 12px);
-  color: rgba(255,255,255,0.85);
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: rgba(255,255,255,0.9);
   text-shadow: 0 3px 0 rgba(0,0,0,0.18);
 }
 
 .counter{
-  margin: 8px 0 0;
+  margin: 10px 0 0;
   font-size: 10px;
-  color: rgba(255,255,255,0.75);
+  color: rgba(255,255,255,0.85);
   text-shadow: 0 3px 0 rgba(0,0,0,0.18);
 }
 
-/* ================================
-   MAIN CONTENT (panel sits lower)
-================================ */
+/* === Main hub panel (big green framed box) === */
 .content{
   position: relative;
-  z-index: 2;
-
-  /* Make sure nothing overlaps ground */
-  padding-bottom: calc(var(--ground-h) + 56px);
-
-  /* pull panel down so it doesn't touch clouds */
-  margin-top: 26px;
-
-  display: flex;
-  justify-content: center;
-  padding-left: 14px;
-  padding-right: 14px;
+  z-index: 3;
+  display:flex;
+  justify-content:center;
+  padding: 30px 14px 0;
 }
 
 .hub-panel{
-  width: min(980px, 100%);
-  padding: 18px 16px;
+  width: min(980px, 92vw);
 
-  background: linear-gradient(#1f981f, var(--panel-green));
-  border: 6px solid var(--panel-green-dark);
+  padding: 22px 20px 18px;
+  background: linear-gradient(#1f981f, var(--panel));
+  border: 6px solid var(--panel-dark);
+
   box-shadow:
-    0 0 0 4px var(--panel-green-deeper),
+    0 0 0 4px var(--panel-deep),
     0 10px 0 rgba(0,0,0,0.25);
 
-  border-radius: 6px;
+  border-radius: 10px;
 }
 
-/* grid of cards */
+/* === Green game boxes (your old vibe) === */
 .game-grid{
-  display: grid;
-  grid-template-columns: repeat(4, minmax(160px, 1fr));
-  gap: 16px;
+  display:grid;
+  grid-template-columns: repeat(4, minmax(170px, 1fr));
+  gap: 18px;
 }
 
 .game-card{
   background: linear-gradient(#1c7f1c, #0f5f0f);
-  border: 4px solid var(--border-dark);
-  box-shadow:
-    0 0 0 3px var(--border-mid),
-    0 0 0 6px rgba(0,0,0,0.25);
-  border-radius: 4px;
+  border: 4px solid var(--tile-dark);
+  border-radius: 8px;
   padding: 12px;
+
+  box-shadow:
+    0 0 0 3px var(--tile-mid),
+    0 0 0 6px rgba(0,0,0,0.22);
 }
 
 .card-inner{
-  display: grid;
+  display:grid;
+  justify-items:center;
+  text-align:center;
   gap: 10px;
-  justify-items: center;
-  text-align: center;
 }
 
 .icon-frame{
-  width: 120px;
-  height: 120px;
-  background: linear-gradient(#0f6a0f, #0b4b0b);
-  border: 4px solid var(--border-mid);
-  box-shadow:
-    inset 0 0 0 4px rgba(0,0,0,0.25),
-    0 6px 0 rgba(0,0,0,0.25);
-  border-radius: 6px;
+  width: 132px;
+  height: 132px;
+  border-radius: 10px;
 
-  display: grid;
-  place-items: center;
+  background: linear-gradient(#0f6a0f, #0b4b0b);
+  border: 4px solid var(--tile-mid);
+
+  box-shadow:
+    inset 0 0 0 4px rgba(0,0,0,0.22),
+    0 7px 0 rgba(0,0,0,0.22);
+
+  display:grid;
+  place-items:center;
 }
 
 .card-icon{
-  width: 72px;
-  height: 72px;
+  width: 78px;
+  height: 78px;
   image-rendering: pixelated;
 }
 
 .card-title{
   margin: 0;
-  font-size: 10px;
+  font-size: 11px;
   color: #eaffea;
   text-shadow: 0 3px 0 rgba(0,0,0,0.25);
 }
 
-/* ================================
-   PIXEL BUTTON (matches your hub vibe)
-================================ */
+/* === Pixel Play button (purple) === */
 .pixel-btn{
   position: relative;
-  display: inline-block;
-  padding: 8px 14px;
+  display:inline-block;
+  padding: 9px 16px;
 
-  background: linear-gradient(var(--btn-purple), #3e38b8);
-  border: 4px solid var(--btn-purple-dark);
-  color: var(--btn-text);
-  text-decoration: none;
+  background: linear-gradient(var(--btn), #3e38b8);
+  border: 4px solid var(--btn-dark);
+  border-radius: 8px;
 
+  color:#fff;
+  text-decoration:none;
   font-size: 10px;
   line-height: 1;
-  border-radius: 6px;
 
   box-shadow:
     0 6px 0 rgba(0,0,0,0.25),
@@ -217,10 +192,7 @@ body{
   transition: transform 120ms ease;
 }
 
-.pixel-btn:hover{
-  transform: translateY(-1px);
-}
-
+.pixel-btn:hover{ transform: translateY(-1px); }
 .pixel-btn:active{
   transform: translateY(2px);
   box-shadow:
@@ -231,55 +203,47 @@ body{
 /* Tooltip */
 .pixel-btn[data-tooltip]::after{
   content: attr(data-tooltip);
-  position: absolute;
-  left: 50%;
+  position:absolute;
+  left:50%;
   bottom: calc(100% + 10px);
   transform: translateX(-50%);
-  white-space: nowrap;
+  white-space:nowrap;
 
   background: rgba(0,0,0,0.85);
-  color: #fff;
+  color:#fff;
   padding: 8px 10px;
   border: 2px solid rgba(255,255,255,0.2);
-  border-radius: 6px;
+  border-radius: 8px;
 
   font-size: 9px;
-  opacity: 0;
-  pointer-events: none;
+  opacity:0;
+  pointer-events:none;
   transition: opacity 140ms ease;
 }
-
 .pixel-btn[data-tooltip]::before{
-  content: "";
-  position: absolute;
-  left: 50%;
+  content:"";
+  position:absolute;
+  left:50%;
   bottom: calc(100% + 2px);
   transform: translateX(-50%);
   border: 7px solid transparent;
   border-top-color: rgba(0,0,0,0.85);
-  opacity: 0;
+  opacity:0;
   transition: opacity 140ms ease;
 }
-
 .pixel-btn:hover::after,
-.pixel-btn:hover::before{
-  opacity: 1;
-}
+.pixel-btn:hover::before{ opacity:1; }
 
-/* ================================
-   SLIME (floats in sky ABOVE panels)
-================================ */
+/* === Slime sits above grass, center === */
 .slime{
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: calc(var(--ground-h) + 20px);
-  width: 96px;
+  bottom: calc(var(--ground-h) + 18px);
+  width: 110px;
   height: auto;
-  z-index: 2;
+  z-index: 4;
   image-rendering: pixelated;
-
-  /* optional: tiny float vibe */
   animation: floaty 2.2s ease-in-out infinite;
 }
 
@@ -288,18 +252,15 @@ body{
   50% { transform: translateX(-50%) translateY(-8px); }
 }
 
-/* ================================
-   GROUND (pinned to bottom INSIDE scene)
-================================ */
+/* === Grass ground strip (back!) === */
 .ground{
   position: absolute;
   left: 0;
   bottom: 0;
   width: 100%;
   height: var(--ground-h);
-  z-index: 3;
+  z-index: 5;
 
-  /* ✅ FIXED PATH (CSS is in root) */
   background-image: url("assets/images/grass.png");
   background-repeat: repeat-x;
   background-position: bottom center;
@@ -308,45 +269,28 @@ body{
   image-rendering: pixelated;
 }
 
-/* Footer sits just above grass */
+/* Footer text over grass */
 .footer{
   position: absolute;
   left: 0;
-  bottom: calc(var(--ground-h) + 10px);
+  bottom: calc(var(--ground-h) + 12px);
   width: 100%;
   text-align: center;
-  z-index: 4;
+  z-index: 6;
 
   font-size: 9px;
   color: rgba(0,0,0,0.35);
 }
 
-/* ================================
-   RESPONSIVE
-================================ */
+/* === Responsive === */
 @media (max-width: 980px){
-  .game-grid{
-    grid-template-columns: repeat(2, minmax(160px, 1fr));
-  }
+  .game-grid{ grid-template-columns: repeat(2, minmax(170px, 1fr)); }
 }
 
 @media (max-width: 520px){
-  :root{
-    --cloud-band-h: 190px;
-    --ground-h: 88px;
-  }
-
-  .game-grid{
-    grid-template-columns: 1fr;
-  }
-
-  .icon-frame{
-    width: 140px;
-    height: 140px;
-  }
-
-  .card-icon{
-    width: 84px;
-    height: 84px;
-  }
+  :root{ --cloud-h: 200px; --ground-h: 88px; }
+  .game-grid{ grid-template-columns: 1fr; }
+  .icon-frame{ width: 150px; height: 150px; }
+  .card-icon{ width: 88px; height: 88px; }
+  .title{ font-size: 20px; }
 }
