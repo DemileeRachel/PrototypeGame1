@@ -1,7 +1,7 @@
 /* =========================================
    MINI GAME HUB - RESTORE (Green boxes + grass)
    + Floating SpriteSlime
-   + mrslime on the ground
+   + mrslime on the ground + bob animation
 ========================================= */
 
 :root{
@@ -41,6 +41,9 @@ body{
   min-height: 100vh;
   width: 100%;
   padding-bottom: calc(var(--ground-h) + 70px);
+
+  /* ✅ keep background consistent inside the scene */
+  background: linear-gradient(var(--sky-top), var(--sky-mid), var(--sky-bot));
 }
 
 /* === Clouds === */
@@ -160,34 +163,45 @@ body{
   font-size: 10px;
 }
 
-/* === Floating SpriteSlime === */
+/* === Floating SpriteSlime (✅ single source of truth) === */
 .sprite-slime-float{
   position: absolute;
   left: 50%;
-  bottom: calc(var(--ground-h) + 140px);
+  top: 360px;
   transform: translateX(-50%);
   width: 120px;
+  height: auto;
+
   z-index: 6;
   pointer-events:none;
   image-rendering: pixelated;
+
   animation: floatSprite 2.4s ease-in-out infinite;
 }
 
 @keyframes floatSprite{
   0%,100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(-10px); }
+  50%     { transform: translateX(-50%) translateY(-10px); }
 }
 
-/* === mrslime === */
+/* === MrSlime (✅ bob animation restored) === */
 .mrslime{
   position: absolute;
   left: 50%;
   bottom: calc(var(--ground-h) - 12px);
   transform: translateX(-50%);
   width: 110px;
+
   z-index: 7;
   pointer-events:none;
   image-rendering: pixelated;
+
+  animation: slimeBob 1.4s ease-in-out infinite;
+}
+
+@keyframes slimeBob{
+  0%,100% { transform: translateX(-50%) translateY(0) scale(1); }
+  50%     { transform: translateX(-50%) translateY(-6px) scale(1.03); }
 }
 
 /* === Grass === */
@@ -204,17 +218,6 @@ body{
   background-position: bottom center;
   background-size: auto 100%;
   image-rendering: pixelated;
-}
-.sprite-slime-float{
-  position: absolute;
-  left: 50%;
-  top: 360px;
-  transform: translateX(-50%);
-  width: 120px;
-  height: auto;
-  image-rendering: pixelated;
-  pointer-events: none;
-  z-index: 9999;
 }
 
 /* === Footer === */
@@ -235,18 +238,4 @@ body{
 @media (max-width: 520px){
   :root{ --cloud-h: 200px; --ground-h: 88px; }
   .game-grid{ grid-template-columns: 1fr; }
-}
-/* FORCE SpriteSlime visible (override any older duplicate rules) */
-.sprite-slime-float{
-  position: absolute !important;
-  left: 50% !important;
-  top: 360px !important;
-  transform: translateX(-50%) !important;
-  width: 120px !important;
-  height: auto !important;
-  z-index: 9999 !important;
-  opacity: 1 !important;
-  display: block !important;
-  pointer-events: none !important;
-  image-rendering: pixelated !important;
 }
